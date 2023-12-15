@@ -13,7 +13,7 @@ Follow the instructions below to add and configure the Owasp Zap Scanner in your
 ### Add the Owasp Zap Scanner
 Install the Owasp Zap Scanner in your Visual Studio Team Services account and search for the task in the available tasks. The task will appear in the _Test_ section of the task list. Add it to your build/release task.
 
-![Required Configuration Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/task-added-3-configs-required.PNG)
+![Required Configuration Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/zap-api-configuration.PNG)
 
 ### Required Options
 * **ZAP API Url** : The fully qualified domain name (FQDN) with out the protocol. (Eg. _zap.example.com_)
@@ -77,7 +77,7 @@ This configuration section includes the parameters that need to be sent to perfo
 
 
 ### Available Options
-* **Report Type** : Select the type of report you want generated. Available types are _**HTML**_, _**XML**_ & _**Markdown**_.
+* **Report Type** : Select the type of report you want generated. Available types are _**HTML**_, _**XML**_, _**Markdown**_ or _**All**_.
 * **Destination Folder** : The destination folder that the report file is created. You can use [variables](https://go.microsoft.com/fwlink/?LinkID=550988). Eg. _$(agent.builddirectory)_.
 * **Report Filename** : Name of the report file, without the extension. Extension is determined by the _**Report Type**_. Eg. _OWASP-ZAP-Report-2017-00-00_.
 

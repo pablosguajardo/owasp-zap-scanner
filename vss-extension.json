@@ -4,7 +4,7 @@
     "name": "Owasp Zap Scan",
     "publisher": "solucionespsg",
     "version": "#{Version}",
-    "public": false,
+    "public": true,
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
