@@ -1,0 +1,316 @@
+{
+    "id": "41f040e5-e040-1336-878a-59a493312348",
+    "name": "OwaspZapScan",
+    "friendlyName": "Owasp Zap Scan",
+    "description": "Owasp Zap Scan",
+    "helpMarkDown": "[More Information](https://github.com/pablosguajardo/owasp-zap-scanner)",
+    "category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "runsOn": [
+        "Agent",
+        "MachineGroup"
+    ],
+    "author": "PSG",
+    "version": {
+        "Major": "#{NewMajor}",
+        "Minor": "#{NewMinor}",
+        "Patch": "#{NewPatch}"
+    },
+    "demands": [],
+    "minimumAgentVersion": "1.92.0",
+    "groups": [
+        {
+            "name": "apiConfiguration",
+            "displayName": "ZAP Configuration",
+            "isExpanded": true
+        },
+        {
+            "name": "ajaxSpiderScanOptions",
+            "displayName": "Ajax Spider Scan Options",
+            "isExpanded": true
+        },
+        {
+            "name": "spiderScanOptions",
+            "displayName": "Spider Scan Options",
+            "isExpanded": true
+        },
+        {
+            "name": "activeScanOptions",
+            "displayName": "Active Scan Options",
+            "isExpanded": false
+        },
+        {
+            "name": "verificationConfig",
+            "displayName": "Configure Verification",
+            "isExpanded": false
+        },
+        {
+            "name": "reportingConfiguration",
+            "displayName": "Configure Reports",
+            "isExpanded": false
+        }
+    ],
+    "inputs": [
+        {
+            "name": "ZapApiUrl",
+            "type": "string",
+            "label": "ZAP API Url",
+            "required": true,
+            "defaultValue": "http://localhost:$(ProxyPort)",
+            "groupName": "apiConfiguration",
+            "helpMarkDown": "Full Api Url"
+        },
+        {
+            "name": "ZapApiKey",
+            "type": "string",
+            "label": "API Key",
+            "required": true,
+            "defaultValue": "$(WebName)",
+            "groupName": "apiConfiguration",
+            "helpMarkDown": "API key by default in order to invoke API operations that make changes to ZAP. API key is required by default in order to invoke any of the API operations. This is a security feature to prevent malicious sites from invoking the ZAP API."
+        },
+        {
+            "name": "TargetUrl",
+            "type": "string",
+            "label": "Target URL",
+            "required": true,
+            "defaultValue": "$(UrlToScan)",
+            "groupName": "apiConfiguration",
+            "helpMarkDown": "Target URL to scan, including the protocol, eg https://www.example.com"
+        },
+        {
+            "name": "ClearSession",
+            "type": "boolean",
+            "label": "New Session",
+            "required": false,
+            "defaultValue": "true",
+            "groupName": "apiConfiguration",
+            "helpMarkDown": "Creates a new session, optionally overwriting existing files. If a relative path is specified it will be resolved against the 'session' directory in ZAP 'home' dir."
+        },
+        {
+            "name": "ExecuteAjaxSpiderScan",
+            "type": "boolean",
+            "label": "Execute Ajax Spider",
+            "required": false,
+            "groupName": "ajaxSpiderScanOptions",
+            "helpMarkDown": "Enable to run a Ajax spider scan on the target."
+        },
+        {
+            "name": "AjaxInScope",
+            "type": "boolean",
+            "label": "In Scope",
+            "required": false,
+            "groupName": "ajaxSpiderScanOptions",
+            "helpMarkDown": "A boolean (true/false) indicating whether or not the scan should be restricted to 'inScope' only resources (default value is false). Enable to use the nodes underneath the one specified target to seed the Ajax spider.",
+            "visibleRule": "ExecuteAjaxSpiderScan = true"
+        },
+        {
+            "name": "AjaxSubTreeOnly",
+            "type": "boolean",
+            "label": "Sub tree only",
+            "required": false,
+            "groupName": "ajaxSpiderScanOptions",
+            "helpMarkDown": "A boolean (true/false) indicating whether or not the crawl should be constrained to a specific path (default value is false). Enable to use the nodes underneath the one specified target to seed the Ajax spider.",
+            "visibleRule": "ExecuteAjaxSpiderScan = true"
+        },
+        {
+            "name": "AjaxContextName",
+            "type": "string",
+            "label": "Context Name",
+            "required": false,
+            "groupName": "ajaxSpiderScanOptions",
+            "helpMarkDown": "The name for any defined context. If the value does not match a defined context then an error will occur.",
+            "visibleRule": "ExecuteAjaxSpiderScan = true"
+        },
+        {
+            "name": "ExecuteSpiderScan",
+            "type": "boolean",
+            "label": "Execute Spider",
+            "required": false,
+            "groupName": "spiderScanOptions",
+            "helpMarkDown": "Enable to run a spider scan on the target."
+        },
+        {
+            "name": "RecurseSpider",
+            "type": "boolean",
+            "label": "Recurse",
+            "required": false,
+            "groupName": "spiderScanOptions",
+            "helpMarkDown": "The 'recurse' parameter can be used to scan URLs under the given URL.",
+            "visibleRule": "ExecuteSpiderScan = true"
+        },
+        {
+            "name": "SubtreeOnly",
+            "type": "boolean",
+            "label": "Sub tree Only",
+            "required": false,
+            "groupName": "spiderScanOptions",
+            "helpMarkDown": "The parameter 'subtreeOnly' allows to restrict the spider under a site's subtree (using the specified 'URL').",
+            "visibleRule": "ExecuteSpiderScan = true"
+        },
+        {
+            "name": "ContextName",
+            "type": "string",
+            "label": "Context Name",
+            "required": false,
+            "groupName": "spiderScanOptions",
+            "helpMarkDown": "The parameter 'contextName' can be used to constrain the scan to a Context. Is the name for any defined context. If the value does not match a defined context then an error will occur.",
+            "visibleRule": "ExecuteSpiderScan = true"
+        },
+        {
+            "name": "MaxChildrenToCrawl",
+            "type": "string",
+            "label": "Max Children to scan",
+            "required": false,
+            "groupName": "spiderScanOptions",
+            "helpMarkDown": "'maxChildren' parameter can be set to limit the number of children scanned and the 'recurse' parameter can be used to prevent the spider from seeding recursively.",
+            "visibleRule": "ExecuteSpiderScan = true"
+        },
+        {
+            "name": "ExecuteActiveScan",
+            "type": "boolean",
+            "label": "Execute Active Scan",
+            "required": false,
+            "groupName": "activeScanOptions",
+            "helpMarkDown": "Active scanning attempts to find potential vulnerabilities by using known attacks against the selected targets. Active scanning is an attack on those targets. You should NOT use it on applications that you do not have permission to."
+        },
+        {
+            "name": "ContextId",
+            "type": "string",
+            "label": "Context ID",
+            "required": false,
+            "groupName": "activeScanOptions",
+            "helpMarkDown": "Scan context identifier",
+            "visibleRule": "ExecuteActiveScan = true"
+        },
+        {
+            "name": "Recurse",
+            "type": "boolean",
+            "label": "Recurse",
+            "defaultValue": "true",
+            "required": false,
+            "groupName": "activeScanOptions",
+            "helpMarkDown": "The 'recurse' parameter can be used to scan URLs under the given URL.",
+            "visibleRule": "ExecuteActiveScan = true"
+        },
+        {
+            "name": "InScopeOnly",
+            "type": "boolean",
+            "label": "In Scope Only",
+            "required": false,
+            "groupName": "activeScanOptions",
+            "helpMarkDown": "The parameter 'inScopeOnly' can be used to constrain the scan to URLs that are in scope (ignored if a Context is specified).",
+            "visibleRule": "ExecuteActiveScan = true"
+        },
+        {
+            "name": "ScanPolicyName",
+            "type": "string",
+            "label": "Scan Policy Name",
+            "required": false,
+            "groupName": "activeScanOptions",
+            "helpMarkDown": "The parameter 'scanPolicyName' allows to specify the scan policy (if none is given it uses the default scan policy).",
+            "visibleRule": "ExecuteActiveScan = true"
+        },
+        {
+            "name": "Method",
+            "type": "string",
+            "label": "Method",
+            "required": false,
+            "groupName": "activeScanOptions",
+            "helpMarkDown": "The parameters 'method' and 'postData' allow to select a given request in conjunction with the given URL.",
+            "visibleRule": "ExecuteActiveScan = true"
+        },
+        {
+            "name": "PostData",
+            "type": "multiLine",
+            "label": "POST Data",
+            "required": false,
+            "groupName": "activeScanOptions",
+            "helpMarkDown": "The parameters 'method' and 'postData' allow to select a given request in conjunction with the given URL.",
+            "visibleRule": "ExecuteActiveScan = true",
+            "properties": {
+                "resizable": true,
+                "rows" : "10"
+            }
+        },
+        {
+            "name": "EnableVerifications",
+            "type": "boolean",
+            "label": "Enable Verifications",
+            "required": false,
+            "groupName": "verificationConfig",
+            "helpMarkDown": "Enable to add thresholds for security risk types and fail the build if the threshold is exceeded."
+        },
+        {
+            "name": "MaxHighRiskAlerts",
+            "type": "string",
+            "label": "High Risk Alert Threshold",
+            "required": false,
+            "groupName": "verificationConfig",
+            "helpMarkDown": "Number of Maximum allowed High Risk Alerts",
+            "visibleRule": "EnableVerifications = true"
+        },
+        {
+            "name": "MaxMediumRiskAlerts",
+            "type": "string",
+            "label": "Medium Risk Alert Threshold",
+            "required": false,
+            "groupName": "verificationConfig",
+            "helpMarkDown": "Number of Maximum allowed Medium Risk Alerts",
+            "visibleRule": "EnableVerifications = true"
+        },
+        {
+            "name": "MaxLowRiskAlerts",
+            "type": "string",
+            "label": "Low Risk Alert Threshold",
+            "required": false,
+            "groupName": "verificationConfig",
+            "helpMarkDown": "Number of Maximum allowed Low Risk Alerts",
+            "visibleRule": "EnableVerifications = true"
+        },
+        {
+            "name": "ReportType",
+            "type": "pickList",
+            "label": "Report Type",
+            "required": false,
+            "groupName": "reportingConfiguration",
+            "helpMarkDown": "Select the type of report you want generated. Available types are *HTML*, *XML*, *Markdown* or *All*",
+            "options": {
+                "html": "HTML Report",
+                "xml": "XML Report",
+                "md": "Markdown Report",
+                "all": "All Reports"
+            },
+            "defaultValue": "html"
+        },
+        {
+            "name": "ReportFileDestination",
+            "type": "filePath",
+            "label": "Destination Folder",
+            "required": false,
+            "groupName": "reportingConfiguration",
+            "helpMarkDown": "The destination folder that the report file is created. You can use [variables](https://go.microsoft.com/fwlink/?LinkID=550988). Eg.: _$(agent.builddirectory)_",
+            "defaultValue": "$(System.DefaultWorkingDirectory)"
+        },
+        {
+            "name": "ReportFileName",
+            "type": "string",
+            "label": "Report Filename",
+            "required": false,
+            "groupName": "reportingConfiguration",
+            "helpMarkDown": "Name of the report file, without the extension. Extension is determined by the *Report Type*. Eg. OWASP-ZAP-Report.xml",
+            "defaultValue": "OWASP-ZAP-Report"
+        }
+    ],
+    "instanceNameFormat": "Owasp Zap Scan",
+    "execution": {
+        "Node": {
+            "target": "owaspzapscan.js",
+            "argumentFormat": ""
+        }
+    },
+    "messages": { }
+}
