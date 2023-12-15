@@ -22,7 +22,8 @@ Install the Owasp Zap Scanner in your Visual Studio Team Services account and se
 
 !Add Owasp Zap Scanner
 
-!Required Configuration Options
+![Required Configuration Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/task-added-3-configs-required.PNG)
+
 
 ### Required Options
 * **ZAP API Url** : The fully qualified domain name (FQDN) with out the protocol. (Eg. _zap.example.com_)
@@ -32,7 +33,8 @@ Install the Owasp Zap Scanner in your Visual Studio Team Services account and se
 ## Ajax Spider Scan Options
 This configuration section includes the parameters that need to be sent to perform the active scan against the target.
 
-!Ajax Spider Scan Options
+![Ajax Spider Scan Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/ajax-spider-scan-options.png)
+
 
 ### Available Options
 * **Execute Ajax Spider Scan** : Enable to run a spider scan on the target.
@@ -43,7 +45,7 @@ This configuration section includes the parameters that need to be sent to perfo
 ## Spider Scan Options
 This configuration section includes the parameters that need to be sent to perform the active scan against the target.
 
-!Spider Scan Options
+![Spider Scan Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/spider-scan-options.png)
 
 ### Available Options
 * **Execute Spider Scan** : Enable to run a spider scan on the target.
@@ -55,7 +57,7 @@ This configuration section includes the parameters that need to be sent to perfo
 ## Active Scan Options
 This configuration section includes the parameters that need to be sent to perform the active scan against the target.
 
-!Active Scan Options
+![Active Scan Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/active-scan-options.PNG)
 
 ### Available Options
 * **Execute Active Scan** : Enable to run an active scan on the target.
@@ -69,7 +71,7 @@ This configuration section includes the parameters that need to be sent to perfo
 ## Configure Verification
 This configuration section includes the parameters that need to be sent to perform the active scan against the target.
 
-!Configure Verification
+![Configure Verification](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/configure-verifications.PNG)
 
 ### Available Options
 * **Enable Verifications**: Enable to add thresholds for security risk types and fail the build if the threshold is exceeded.
@@ -81,7 +83,8 @@ This configuration section includes the parameters that need to be sent to perfo
 This configuration section includes the parameters that need to be sent to perform the active scan against the target.
 
 
-!Configure Reports
+![Configure Reports](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/configure-reports.PNG)
+
 
 ### Available Options
 * **Report Type** : Select the type of report you want generated. Available types are _**HTML**_, _**XML**_ & _**Markdown**_.

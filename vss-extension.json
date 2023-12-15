@@ -25,7 +25,7 @@
             "path": "screenshots/configure-reports.PNG"
         }
     ],
-    "tags": [ "build", "release", "security", "testing", "owasp", "zaproxy", "security-scan", "security-testing", "vulnerabilities", "pen-testing", "penetration-testing", "scan" ],
+    "tags": [ "build", "release", "security", "testing", "owasp", "zaproxy", "security-scan", "security-testing", "vulnerabilities", "pen-testing", "penetration-testing", "scan", "scanner" ],
     "icons": {
         "default": "icon.png"        
     },
