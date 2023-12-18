@@ -131,7 +131,8 @@ async function run(): Promise<string> {
                 reject('A scan failed to complete.');
             }
         } catch (err) {
-            reject(err.message || err);
+            reject(err);//err.message ||
+            
        }
     });
 

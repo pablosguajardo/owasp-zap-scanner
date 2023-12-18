@@ -11,7 +11,7 @@ describe('Owasp Zap Scan Inputs', () => {
             taskInput = new TaskInput();
         });
 
-        xit('Should throw an exception when ZapApiUrl is called', () => {
+       /* xit('Should throw an exception when ZapApiUrl is called', () => {
             expect(taskInput.ZapApiUrl).toThrow(new Error('The ZAP API URL is required but not set.'));
         });
 
@@ -21,7 +21,7 @@ describe('Owasp Zap Scan Inputs', () => {
 
         xit('Should throw an exception when ZapApiUrl is called', () => {
             expect(taskInput.TargetUrl).toThrow(new Error('The Target URL is required but not set.'));
-        });
+        });*/
 
         it('Should return false when ExecuteAjaxSpiderScan is called', () => {
             expect(taskInput.ExecuteAjaxSpiderScan).toBeFalsy();
