@@ -21,15 +21,15 @@ pool:
   demands: npm
 
 steps:
-- task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+- task: SonarSource.sonarcloud.111111111111.SonarCloudPrepare@1
   displayName: 'Prepare Analysis on SonarCloud'
   inputs:
     SonarCloud: SonarCloudConnection
     organization: 'pablosguajardo-github'
     scannerMode: CLI
     configMode: manual
-    cliProjectKey: 'pablosguajardo_owasp-zap-vsts-task'
-    cliProjectName: 'owasp-zap-vsts-task '
+    cliProjectKey: 'pablosguajardo_owasp-zap-scanner'
+    cliProjectName: 'owasp-zap-scanner '
     cliProjectVersion: '$(Build.BuildNumber)'
     cliSources: BuildTask
     
@@ -50,9 +50,9 @@ steps:
   inputs:
     command: custom
     verbose: false
-    customCommand: 'run test'
+    customCommand: 'npm '
 
-- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+- task: SonarSource.sonarcloud.ce11111111111111.SonarCloudAnalyze@1
   displayName: 'Run Code Analysis'
     
 - task: CopyFiles@2
