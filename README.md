@@ -1,3 +1,4 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pablosguajardo_owasp-zap-scanner&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=pablosguajardo_owasp-zap-scanner)
 [![Coveralls Status](https://img.shields.io/coveralls/pablosguajardo/owasp-zap-scanner.svg?style=flat-square)](https://coveralls.io/github/pablosguajardo/owasp-zap-scanner)
 [![Known Vulnerabilities](https://snyk.io/test/github/pablosguajardo/owasp-zap-scanner/badge.svg?style=flat-square)](https://snyk.io/test/github/pablosguajardo/owasp-zap-scanner)
 [![Best Practices](https://bestpractices.coreinfrastructure.org/projects/1188/badge)](https://bestpractices.coreinfrastructure.org/projects/1188)

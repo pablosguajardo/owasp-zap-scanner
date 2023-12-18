@@ -81,3 +81,19 @@ This configuration section includes the parameters that need to be sent to perfo
 * **Destination Folder** : The destination folder that the report file is created. You can use [variables](https://go.microsoft.com/fwlink/?LinkID=550988). Eg. _$(agent.builddirectory)_.
 * **Report Filename** : Name of the report file, without the extension. Extension is determined by the _**Report Type**_. Eg. _OWASP-ZAP-Report-2017-00-00_.
 
+
+## Additional
+
+On Windows servers you can complement the use of this extension with:
+
+https://marketplace.visualstudio.com/items?itemName=solucionespsg.OwaspZapOnPremiseStartStop
+
+With this extension you will be able to remotely start a new Owazap session on a new port, scan the URL and then stop the started session.
+
+
+
+## Help to continue development.
+
+If it helped you. You can help me:
+
+https:// paypal.me/solucionespsg 
