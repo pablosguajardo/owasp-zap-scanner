@@ -55,6 +55,7 @@ export class Report {
         /* istanbul ignore if */
         if (process.env.NODE_ENV !== 'test') {
             Task.debug(`Active Scan Results | ZAP API Call: ${this._requestOptions.uri} | Request Options: ${JSON.stringify(this._requestOptions)}`);
+            console.log(`Active Scan Results | ZAP API Call: ${this._requestOptions.uri} | Request Options: ${JSON.stringify(this._requestOptions)}`);
         }
 
         return this._requestService.ExecuteScanResultQuery(this._requestOptions);
@@ -94,13 +95,14 @@ export class Report {
                 }
             }
             return true;
-        } 
+        }
 
         const fullFilePath: string = path.normalize(`${destination}/${fileName}.${ext}`);
 
         /* istanbul ignore if */
         if (process.env.NODE_ENV !== 'test') {
             Task.debug(`Report Filename: ${fullFilePath}`);
+            console.log(`Report Filename: ${fullFilePath}`);
         }
 
         if (type === ReportType.HTML) {

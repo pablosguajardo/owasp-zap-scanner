@@ -28,12 +28,16 @@ export class Helper {
             }
             /* istanbul ignore if */
             if (process.env.NODE_ENV !== 'test') {
-
+                console.log('++++++++++++++++++');
+                console.log(res);
+                console.log('++++++++++++++++++');
             }
 
             const reportJson: ScanReport = res;
-            //if(reportJson.OWASPZAPReport !==  undefined && reportJson.OWASPZAPReport.site !==  undefined &&    reportJson.OWASPZAPReport.site.length)
             const siteCollection: any = reportJson.OWASPZAPReport.site;
+            if (reportJson.OWASPZAPReport === undefined || reportJson.OWASPZAPReport.site === undefined || reportJson.OWASPZAPReport.site.length === 0) {
+                return;
+            }
             const sites: Site[] = Object.keys(siteCollection)[0] === '0' ? siteCollection : [siteCollection as Site];
 
             for (const idx in sites) {
