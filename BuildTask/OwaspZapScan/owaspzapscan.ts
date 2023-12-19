@@ -21,7 +21,7 @@ async function run(): Promise<string> {
 
     const promise = new Promise<string>(async (resolve, reject) => {
 
-       try {
+        try {
             const taskInputs: TaskInput = new TaskInput();
             /* Get the required inputs */
             taskInputs.ZapApiUrl = Task.getInput('ZapApiUrl', true);
@@ -34,7 +34,7 @@ async function run(): Promise<string> {
             taskInputs.AjaxInScope = Task.getBoolInput('AjaxInScope');
             taskInputs.AjaxContextName = Task.getInput('AjaxContextName');
             taskInputs.AjaxSubTreeOnly = Task.getBoolInput('AjaxSubTreeOnly');
-           
+
 
             /* Spider Scan Options */
             taskInputs.ExecuteSpiderScan = Task.getBoolInput('ExecuteSpiderScan');
@@ -72,7 +72,7 @@ async function run(): Promise<string> {
             }
 
             const requestService: RequestService = new RequestService();
-            const helper: Helper = new Helper();    
+            const helper: Helper = new Helper();
             const report: Report = new Report(helper, requestService, taskInputs);
 
             const selectedScans: Array<IZapScan> = new Array<IZapScan>();
@@ -98,13 +98,13 @@ async function run(): Promise<string> {
                 console.log('Active scan is selected.');
                 const activeScan: ActiveScan = new ActiveScan(taskInputs);
                 selectedScans.push(activeScan);
-            }    
+            }
 
             /* Execute the Scans */
             for (let i: number = 0; i < selectedScans.length; i++) {
                 const scan: IZapScan = selectedScans[i];
                 scanStatus = await scan.ExecuteScan();
-                
+
                 if (!scanStatus.Success) {
                     const message: string = `The ${scan.scanType} failed with the Error: ${scanStatus.Success}`;
                     reject(message);
@@ -117,7 +117,7 @@ async function run(): Promise<string> {
                 /* Generate the report */
                 console.log('Generating the report...');
                 const isSuccess: boolean = await report.GenerateReport();
-                
+
                 if (!isSuccess) {
                     hasIssues = isSuccess;
                 }
@@ -126,18 +126,22 @@ async function run(): Promise<string> {
                 const verify: Verify = new Verify(helper, report, taskInputs);
                 verify.Assert();
 
-                resolve(`Owasp Zap Active Scan ${hasIssues ? 'Partially' : '' } Completed. Result is within the expected thresholds.`);
+                resolve(`Owasp Zap Active Scan ${hasIssues ? 'Partially' : ''} Completed. Result is within the expected thresholds.`);
             } else {
                 reject('A scan failed to complete.');
             }
         } catch (err) {
-            reject(err); //err.message ||
-            
-       }
+            let errmsg = err.stack || err;
+            /* istanbul ignore if */
+            if (process.env.NODE_ENV !== 'test') {
+                errmsg = errmsg + err.message;
+            }
+            reject(errmsg);
+        }
     });
 
-    return promise;   
-}   
+    return promise;
+}
 
 run()
     .then((result: string) => {

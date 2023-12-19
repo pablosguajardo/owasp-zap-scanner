@@ -16,9 +16,9 @@ import { RequestService } from './RequestService';
 
 export class Report {
     private _reportOptions: ZapScanReportOptions;
-    private _requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions;  
+    private _requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions;
 
-    private _helper: Helper;    
+    private _helper: Helper;
     private _requestService: RequestService;
     private _taskInputs: TaskInput;
 
@@ -46,8 +46,8 @@ export class Report {
 
         /* Set report type */
         if (type === ReportType.XML) { reportType = Constants.XML_REPORT; }
-        if (type === ReportType.HTML) { reportType = Constants.HTML_REPORT; } 
-        if (type === ReportType.MD) { reportType = Constants.MD_REPORT; } 
+        if (type === ReportType.HTML) { reportType = Constants.HTML_REPORT; }
+        if (type === ReportType.MD) { reportType = Constants.MD_REPORT; }
         if (type === ReportType.ALL) { reportType = Constants.ALL_REPORT; }
 
         this._requestOptions.uri = `${this._requestOptions.uri}/${reportType}/`;
@@ -78,7 +78,7 @@ export class Report {
         let ext: string;
         let scanReport: string;
 
-        const fileName = this._taskInputs.ReportFileName === '' ? 'OWASP-ZAP-Report' :  this._taskInputs.ReportFileName;
+        const fileName = this._taskInputs.ReportFileName === '' ? 'OWASP-ZAP-Report' : this._taskInputs.ReportFileName;
         const destination = this._taskInputs.ReportFileDestination === '' ? './' : this._taskInputs.ReportFileDestination;
 
         if (type === ReportType.XML) {
@@ -88,7 +88,10 @@ export class Report {
         } else if (type === ReportType.ALL) {
             const allTypes = [ReportType.XML, ReportType.HTML, ReportType.MD];
             for (const t of allTypes) {
-                await this.GenerateReportInternal(t);
+                const reportok = await this.GenerateReportInternal(t);
+                if (reportok === false) {
+                    return false;
+                }
             }
             return true;
         } else {
@@ -99,9 +102,9 @@ export class Report {
         const fullFilePath: string = path.normalize(`${destination}/${fileName}.${ext}`);
 
         /* istanbul ignore if */
-        if (process.env.NODE_ENV !== 'test') { 
+        if (process.env.NODE_ENV !== 'test') {
             Task.debug(`Report Filename: ${fullFilePath}`);
-        }       
+        }
 
         if (type === ReportType.HTML) {
             /* Get the Scan Result */
@@ -112,23 +115,23 @@ export class Report {
             scanReport = this.createCustomHtmlReport(processedAlerts);
         } else {
             scanReport = await this.GetScanResults(type);
-        }        
-        
+        }
+
         /* Write the File */
         return new Promise<boolean>((resolve, reject) => {
             fs.writeFile(fullFilePath, scanReport, (err: any) => {
                 if (err) {
-                    Task.error('Error al generar el informe HTML');
+                    Task.error(`Error al guardar el informe ${fullFilePath}`);
                     reject(false);
                 }
                 resolve(true);
             });
-        });    
+        });
     }
 
     PrintResult(highAlerts: number, mediumAlerts: number, lowAlerts: number, infoAlerts: number): void {
         /* istanbul ignore if */
-        if (process.env.NODE_ENV !== 'test') { 
+        if (process.env.NODE_ENV !== 'test') {
             console.log();
             console.log('**************************');
             console.log('*   Active Scan Result   *');
@@ -142,7 +145,7 @@ export class Report {
             console.log(`  Low Risk     | ${lowAlerts}`);
             console.log(`  Info Risk    | ${infoAlerts}`);
             console.log('__________________________');
-        }        
+        }
     }
 
     private createCustomHtmlReport(alertResult: AlertResult): string {
@@ -154,7 +157,7 @@ export class Report {
                     ${this.createAlertTable(alertResult.Alerts[Number(idx)])}
 
                 `;
-            }            
+            }
         }
 
         const htmlLayout: string = `
@@ -271,7 +274,7 @@ export class Report {
                 break;
             case Constants.LOW_RISK:
                 cssClass = 'bg-low';
-                break;        
+                break;
             case Constants.INFO_RISK:
                 cssClass = 'bg-success';
                 break;
@@ -287,8 +290,8 @@ export class Report {
                     ${alert.instances.instance[i].evidence ? this.createAlertRow('&nbsp;&nbsp;&nbsp;&nbsp;Evidence', alert.instances.instance[i].evidence, AlertRowType.InstanceRow) : ''}
                     ${alert.instances.instance[i].param ? this.createAlertRow('&nbsp;&nbsp;&nbsp;&nbsp;Parameters', alert.instances.instance[i].param, AlertRowType.InstanceRow) : ''}
                     ${alert.instances.instance[i].attack ? this.createAlertRow('&nbsp;&nbsp;&nbsp;&nbsp;Attack', alert.instances.instance[i].attack, AlertRowType.InstanceRow) : ''}
-                `; 
-            }            
+                `;
+            }
         }
 
         tableRows = `
