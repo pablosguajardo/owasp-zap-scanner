@@ -131,11 +131,7 @@ async function run(): Promise<string> {
                 reject('A scan failed to complete.');
             }
         } catch (err) {
-            let errmsg = err.stack || err;
-            /* istanbul ignore if */
-            if (process.env.NODE_ENV !== 'test') {
-                errmsg = errmsg + err.message;
-            }
+            const errmsg: any = process.env.NODE_ENV !== 'test' ? err.stack + err.message : err.stack || err;
             reject(errmsg);
         }
     });

@@ -75,7 +75,7 @@ export class Report {
     }
 
     async GenerateReportInternal(type: ReportType = ReportType.HTML): Promise<boolean> {
-        let ext: string;
+        let ext: string = Constants.HTML;
         let scanReport: string;
 
         const fileName = this._taskInputs.ReportFileName === '' ? 'OWASP-ZAP-Report' : this._taskInputs.ReportFileName;
@@ -94,10 +94,7 @@ export class Report {
                 }
             }
             return true;
-        } else {
-            //  HTML is Default
-            ext = Constants.HTML;
-        }
+        } 
 
         const fullFilePath: string = path.normalize(`${destination}/${fileName}.${ext}`);
 

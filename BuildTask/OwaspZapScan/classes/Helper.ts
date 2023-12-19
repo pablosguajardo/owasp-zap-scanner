@@ -5,7 +5,7 @@ import { AlertItem, ScanReport, Site } from './../interfaces/types/ZapReport';
 import { Constants } from './Constants';
 
 export class Helper {
-    constructor () {}
+    constructor() { }
 
     ProcessAlerts(xmlResult: string, targetUrl: string): AlertResult {
         const high: Array<AlertItem> = new Array<AlertItem>();
@@ -23,14 +23,19 @@ export class Helper {
         };
 
         XmlParser.to_json(xmlResult, (err: any, res: any) => {
-            if (err) {
+            if (err || res === undefined) {
                 return;
+            }
+            /* istanbul ignore if */
+            if (process.env.NODE_ENV !== 'test') {
+
             }
 
             const reportJson: ScanReport = res;
+            //if(reportJson.OWASPZAPReport !==  undefined && reportJson.OWASPZAPReport.site !==  undefined &&    reportJson.OWASPZAPReport.site.length)
             const siteCollection: any = reportJson.OWASPZAPReport.site;
             const sites: Site[] = Object.keys(siteCollection)[0] === '0' ? siteCollection : [siteCollection as Site];
-            
+
             for (const idx in sites) {
                 if (targetUrl.includes(sites[idx].$.host)) {
                     alerts = sites[idx].alerts.alertitem;
@@ -43,13 +48,13 @@ export class Helper {
 
             const _alerts: any = alerts;
             alerts = Object.keys(_alerts)[0] === '0' ? _alerts : [_alerts as AlertItem];
-            
+
             for (const idx of Object.keys(alerts)) {
                 const i: number = Number(idx);
-                
+
                 if (alerts[i].riskcode === Constants.HIGH_RISK) {
-                    high.push(alerts[i]); 
-                    alertResult.HighAlerts++; 
+                    high.push(alerts[i]);
+                    alertResult.HighAlerts++;
                 }
 
                 if (alerts[i].riskcode === Constants.MEDIUM_RISK) {
