@@ -66,11 +66,9 @@ export abstract class ZapScanBase implements IZapScan {
                 while (true) {
                     sleep(10000);
                     const scanStatus: number = await this.GetScanStatus(scanId, scanType);
-
                     if (scanStatus < 0) {
                         throw new Error(`Failed to get ${this.scanType} status.`);
                     }
-
                     if (scanStatus >= 100) {
                         console.log(`${this.scanType} In Progress: ${scanStatus}%`);
                         console.log(`${this.scanType} Complete.`);
@@ -78,7 +76,6 @@ export abstract class ZapScanBase implements IZapScan {
                         scanCompleted = true;
                         break;
                     }
-
                     if (previousScanStatus !== scanStatus) {
                         console.log(`${this.scanType} In Progress: ${scanStatus}%`);
                         scanCompleted = false;
@@ -86,9 +83,7 @@ export abstract class ZapScanBase implements IZapScan {
 
                     previousScanStatus = scanStatus;
                 }
-
                 resolve(scanCompleted);
-
             } catch (error) {
                 reject(scanCompleted);
             }
@@ -103,16 +98,11 @@ export abstract class ZapScanBase implements IZapScan {
             formMethod: 'GET',
             scanId: scanId
         };
-        //
+
         if (scanType === ZapScanType.Active) { zapScanType = 'ascan'; }
         else if (scanType === ZapScanType.Spider) { zapScanType = 'spider'; }
         else if (scanType === ZapScanType.AjaxSpider) {
             zapScanType = 'ajaxSpider';
-            // const  statusOptions: ZapAjaxScanStatusOptions = {
-            //     zapapiformat: 'JSON',
-            //     apikey: this.taskInputs.ZapApiKey,
-            //     formMethod: 'GET'
-            // };
         }
 
         const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
@@ -123,10 +113,7 @@ export abstract class ZapScanBase implements IZapScan {
         if (process.env.NODE_ENV !== 'test') {
             console.log(`${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
         }
-
-
         Task.debug(`${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
-
         return new Promise<number>((resolve, reject) => {
             RequestPromise(requestOptions)
                 .then((res: any) => {
