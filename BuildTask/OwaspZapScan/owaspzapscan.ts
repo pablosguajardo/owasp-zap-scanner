@@ -33,6 +33,13 @@ async function run(): Promise<string> {
             taskInputs.NewContext = Task.getBoolInput('NewContext');
             taskInputs.NewContextName = Task.getInput('NewContextName');
 
+            /* Open Api Scan Options */
+            taskInputs.ExecuteOpenApiScan = Task.getBoolInput('ExecuteOpenApiScan');
+            taskInputs.OpenApiFile = Task.getInput('OpenApiFile');
+            taskInputs.OpenApiUrl = Task.getInput('OpenApiUrl');
+            taskInputs.OpenApiHostOverride = Task.getInput('OpenApiHostOverride');
+            taskInputs.OpenApiContextId = Task.getInput('OpenApiContextId');
+
             /* Ajax Spider Scan Options */
             taskInputs.ExecuteAjaxSpiderScan = Task.getBoolInput('ExecuteAjaxSpiderScan');
             taskInputs.AjaxInScope = Task.getBoolInput('AjaxInScope');
