@@ -198,24 +198,33 @@
             "label": "Execute Open Api Scan",
             "required": false,
             "groupName": "openApiScanOptions",
-            "helpMarkDown": "The OpenAPI Support add-on for ZAP allows users to spider and import OpenAPI (Swagger) definitions, versions 1.2, 2.0, and 3.0. This add-on automatically detects any OpenAPI definitions and spiders them as long as they are in scope."
+            "helpMarkDown": "The OpenAPI Support add-on for ZAP allows users to spider and import OpenAPI (Swagger) definitions, versions 1.2, 2.0, and 3.0. This add-on automatically detects any OpenAPI definitions and spiders them as long as they are in scope. https://www.zaproxy.org/docs/desktop/addons/openapi-support & https://www.zaproxy.org/docs/api/#zap-api-openapi"
         },
         {
             "name": "OpenApiUrl",
             "type": "string",
             "label": "Url",
-            "required": true,
+            "required": false,
             "groupName": "openApiScanOptions",
-            "helpMarkDown": "Url: The URL locating the OpenAPI definition.",
+            "helpMarkDown": "Enter data in URL or File. Not both. Url: The URL locating the OpenAPI definition. https://www.zaproxy.org/docs/desktop/addons/openapi-support",
+            "visibleRule": "ExecuteOpenApiScan = true"
+        },
+        {
+            "name": "OpenApiFile",
+            "type": "string",
+            "label": "File",
+            "required": false,
+            "groupName": "openApiScanOptions",
+            "helpMarkDown": "Enter data in URL or File. Not both. The file that contains the OpenAPI definition. https://www.zaproxy.org/docs/desktop/addons/openapi-support",
             "visibleRule": "ExecuteOpenApiScan = true"
         },
         {
             "name": "OpenApiHostOverride",
             "type": "string",
-            "label": "HostOverride",
+            "label": "HostOverride/Target",
             "required": true,
             "groupName": "openApiScanOptions",
-            "helpMarkDown": "HostOverride: The Target URL (called hostOverride for historical reasons) to override the server URL present in the definition.",
+            "helpMarkDown": "HostOverride: The Target URL (called hostOverride for historical reasons) to override the server URL present in the definition. Target: The Target URL to override the server URL present in the definition. https://www.zaproxy.org/docs/desktop/addons/openapi-support",
             "visibleRule": "ExecuteOpenApiScan = true"
         },
         {
@@ -224,7 +233,7 @@
             "label": "Context ID",
             "required": false,
             "groupName": "openApiScanOptions",
-            "helpMarkDown": "Scan context identifier",
+            "helpMarkDown": "Scan context identifier. https://www.zaproxy.org/docs/desktop/addons/openapi-support",
             "visibleRule": "ExecuteOpenApiScan = true"
         },
         {

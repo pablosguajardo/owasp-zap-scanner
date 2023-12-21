@@ -91,6 +91,18 @@ export class TaskInput {
         return false;
     }
 
+    private _openApiFile: string;
+    set OpenApiFile(value: string) {
+        this._openApiFile = value;
+    }
+
+    get OpenApiFile(): string {
+        if (this._openApiFile) {
+            return this._openApiFile;
+        }
+        return '';
+    }
+
     private _openApiUrl: string;
     set OpenApiUrl(value: string) {
         this._openApiUrl = value;

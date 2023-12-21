@@ -22,7 +22,8 @@ export class Constants {
     static AJAX_SPIDER_SCAN_NAME: string =  'Ajax Spider Scan';
     static ACTIVE_SCAN_NAME: string = 'Active Scan';
     static SPIDER_SCAN_NAME: string = 'Spider Scan';
-    static OPENAPI_SCAN_NAME: string = 'Open Api Scan';
+    static OPENAPI_URL_SCAN_NAME: string = 'Open Api Scan from url';
+    static OPENAPI_FILE_SCAN_NAME: string = 'Open Api Scan from file';
     
     /* Ajax spider status */
     static STOPPED_LOWER: string =  'stopped';
