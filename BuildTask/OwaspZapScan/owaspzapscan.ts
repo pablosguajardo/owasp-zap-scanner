@@ -109,11 +109,13 @@ async function run(): Promise<string> {
                 const spiderAjaxScan: AjaxSpiderScan = new AjaxSpiderScan(taskInputs);
                 selectedScans.push(spiderAjaxScan);
             }
-
+            if (process.env.NODE_ENV !== 'test') {
+                console.log(`OpenApiUrl: ${taskInputs.OpenApiUrl} OpenApiFile: ${taskInputs.OpenApiFile}`);
+            }
             /* Add Open Api Scan is selected */
             if (taskInputs.ExecuteOpenApiScan) {
                 await helper.ValidateInputsOpenApi(taskInputs.OpenApiUrl, taskInputs.OpenApiFile);
-                if (taskInputs.OpenApiUrl !== undefined) {
+                if (taskInputs.OpenApiUrl !== '') {
                     console.log('OpenAPI Scan from Url is selected.');
                     const openApiScan: OpenApiUrlScan = new OpenApiUrlScan(taskInputs);
                     selectedScans.push(openApiScan);
