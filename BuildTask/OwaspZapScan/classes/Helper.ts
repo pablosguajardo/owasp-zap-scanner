@@ -84,4 +84,24 @@ export class Helper {
         return alertResult;
     }
 
+    ValidateInputsOpenApi(url: string, file: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            let countParams: number = 0;
+            let message: string;
+            if (url !== undefined) {
+                countParams++;
+            }
+            if (file !== undefined) {
+                countParams++;
+            }
+            if (countParams === 0) {
+                message = 'You must enter data in URL or File.';
+                reject(message);
+            } else if (countParams > 1) {
+                message = 'Enter data in URL or File. Not both.';
+                reject(message);
+            }
+            resolve(true);
+        });
+    }
 }

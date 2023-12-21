@@ -13,5 +13,6 @@ export enum AlertRowType {
 export enum ZapScanType {
     Spider,
     Active,
-    AjaxSpider
+    AjaxSpider,
+    OpenApi
 }
