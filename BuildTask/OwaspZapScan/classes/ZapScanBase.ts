@@ -24,7 +24,7 @@ export abstract class ZapScanBase implements IZapScan {
     ExecuteScan(): Promise<ScanResult> {
         Task.debug(`${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
         if (process.env.NODE_ENV !== 'test') {
-            console.log(`${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
+            console.log(`ExecuteScan ${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
         }
         const scanResult: ScanResult = { Success: false };
 
