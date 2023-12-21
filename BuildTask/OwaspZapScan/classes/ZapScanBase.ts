@@ -31,20 +31,24 @@ export abstract class ZapScanBase implements IZapScan {
         return new Promise<ScanResult>((resolve, reject) => {
             RequestPromise(this.requestOptions)
                 .then(async (res: any) => {
-                    const result: ZapScanResult = JSON.parse(res);
-                    //ver que pasa en ajax:
-                    if (process.env.NODE_ENV !== 'test') {
-                        console.log(`res: ${res}`);
-                    }
-                    if (this.scanType === Constants.AJAX_SPIDER_SCAN_NAME) {
-                        console.log(`Owasp Zap ${this.scanType} Initiated. Result: ${result.result}`);
+                    if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
+                        scanResult.Success = true;
                     } else {
-                        console.log(`Owasp Zap ${this.scanType} Initiated. ID: ${result.scan}`);
-                    }
-                    scanResult.Success = await this.CheckScanStatus(result.scan, this.zapScanType);
-                    if (!scanResult.Success) {
-                        scanResult.Message = `${this.scanType} status check failed.`;
-                        reject(scanResult);
+                        const result: ZapScanResult = JSON.parse(res);
+                        //ver que pasa en ajax:
+                        if (process.env.NODE_ENV !== 'test') {
+                            console.log(`res: ${res}`);
+                        }
+                        if (this.scanType === Constants.AJAX_SPIDER_SCAN_NAME) {
+                            console.log(`Owasp Zap ${this.scanType} Initiated. Result: ${result.result}`);
+                        } else {
+                            console.log(`Owasp Zap ${this.scanType} Initiated. ID: ${result.scan}`);
+                        }
+                        scanResult.Success = await this.CheckScanStatus(result.scan, this.zapScanType);
+                        if (!scanResult.Success) {
+                            scanResult.Message = `${this.scanType} status check failed.`;
+                            reject(scanResult);
+                        }
                     }
                     resolve(scanResult);
                 })
