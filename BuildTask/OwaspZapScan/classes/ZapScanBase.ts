@@ -22,8 +22,8 @@ export abstract class ZapScanBase implements IZapScan {
     }
 
     ExecuteScan(): Promise<ScanResult> {
-        Task.debug(`${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
         if (process.env.NODE_ENV !== 'test') {
+            Task.debug(`ExecuteScan ${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
             console.log(`ExecuteScan ${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
         }
         const scanResult: ScanResult = { Success: false };
@@ -37,7 +37,7 @@ export abstract class ZapScanBase implements IZapScan {
                         const result: ZapScanResult = JSON.parse(res);
                         //ver que pasa en ajax:
                         if (process.env.NODE_ENV !== 'test') {
-                            console.log(`res: ${res}`);
+                            console.log(`ExecuteScan res: ${res}`);
                         }
                         if (this.scanType === Constants.AJAX_SPIDER_SCAN_NAME) {
                             console.log(`Owasp Zap ${this.scanType} Initiated. Result: ${result.result}`);
@@ -54,7 +54,7 @@ export abstract class ZapScanBase implements IZapScan {
                 })
                 .catch((err: any) => {
                     scanResult.Success = false;
-                    scanResult.Message = err.message || err;
+                    scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan: ${err.message}` : err.message || err;
                     reject(scanResult);
                 });
         });
@@ -64,6 +64,9 @@ export abstract class ZapScanBase implements IZapScan {
         let previousScanStatus: number = 0;
         let scanCompleted: boolean = false;
 
+        if (process.env.NODE_ENV !== 'test') {
+            console.log(`CheckScanStatus: ${this.scanType}`);
+        }
         return new Promise<boolean>(async (resolve, reject) => {
             try {
                 // tslint:disable-next-line:no-constant-condition
@@ -118,10 +121,10 @@ export abstract class ZapScanBase implements IZapScan {
             qs: statusOptions
         };
         if (process.env.NODE_ENV !== 'test') {
-            console.log(`${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
+            console.log(`GetScanStatus: ${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
+            Task.debug(`GetScanStatus: ${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
         }
-        Task.debug(`${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
-        return new Promise<number>((resolve, reject) => {
+         return new Promise<number>((resolve, reject) => {
             RequestPromise(requestOptions)
                 .then((res: any) => {
                     let statusNumber;
@@ -138,7 +141,7 @@ export abstract class ZapScanBase implements IZapScan {
                         const result: ZapScanStatus = JSON.parse(res);
                         Task.debug(`${this.scanType} | Status Result: ${JSON.stringify(res)}`);
                         if (process.env.NODE_ENV !== 'test') {
-                            console.log(`${this.scanType} | Status Result: ${JSON.stringify(res)}`);
+                            console.log(`GetScanStatus. ${this.scanType} | Status Result: ${JSON.stringify(res)}`);
                         }
                         statusNumber = result.status;
                     }

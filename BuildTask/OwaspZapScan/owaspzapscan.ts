@@ -90,28 +90,15 @@ async function run(): Promise<string> {
                 const idNewContext = await apiHelper.CreateNewContext(taskInputs.NewContextName);
             }
 
+            if (process.env.NODE_ENV !== 'test') {
+                console.log(`OpenApiUrl: ${taskInputs.OpenApiUrl} OpenApiFile: ${taskInputs.OpenApiFile}`);
+            }
             const report: Report = new Report(helper, requestService, taskInputs);
 
             const selectedScans: Array<IZapScan> = new Array<IZapScan>();
             let scanStatus: ScanResult = { Success: false };
             let hasIssues: boolean = false;
 
-            /* Add Spider Scan is selected */
-            if (taskInputs.ExecuteSpiderScan) {
-                console.log('Spider scan is selected.');
-                const spiderScan: SpiderScan = new SpiderScan(taskInputs);
-                selectedScans.push(spiderScan);
-            }
-
-            /* Add Ajax Spider Scan is selected */
-            if (taskInputs.ExecuteAjaxSpiderScan) {
-                console.log('Ajax spider scan is selected.');
-                const spiderAjaxScan: AjaxSpiderScan = new AjaxSpiderScan(taskInputs);
-                selectedScans.push(spiderAjaxScan);
-            }
-            if (process.env.NODE_ENV !== 'test') {
-                console.log(`OpenApiUrl: ${taskInputs.OpenApiUrl} OpenApiFile: ${taskInputs.OpenApiFile}`);
-            }
             /* Add Open Api Scan is selected */
             if (taskInputs.ExecuteOpenApiScan) {
                 await helper.ValidateInputsOpenApi(taskInputs.OpenApiUrl, taskInputs.OpenApiFile);
@@ -126,6 +113,20 @@ async function run(): Promise<string> {
 
                 }
             }
+            /* Add Spider Scan is selected */
+            if (taskInputs.ExecuteSpiderScan) {
+                console.log('Spider scan is selected.');
+                const spiderScan: SpiderScan = new SpiderScan(taskInputs);
+                selectedScans.push(spiderScan);
+            }
+            /* Add Ajax Spider Scan is selected */
+            if (taskInputs.ExecuteAjaxSpiderScan) {
+                console.log('Ajax spider scan is selected.');
+                const spiderAjaxScan: AjaxSpiderScan = new AjaxSpiderScan(taskInputs);
+                selectedScans.push(spiderAjaxScan);
+            }
+
+
 
             /* Add the Active Scan */
             if (taskInputs.ExecuteActiveScan) {
