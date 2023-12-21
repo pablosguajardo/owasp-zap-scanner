@@ -23,9 +23,15 @@ export interface ZapSpiderScanOptions extends ZapScanOptionsBase {
     subtreeOnly?: string;
 }
 
-export interface ZapOpenApiScanOptions extends ZapScanOptionsBase {
+export interface ZapOpenApiUrlScanOptions extends ZapScanOptionsBase {
     url: string;
     hostOverride?: string;
+    contextId?: string;
+}
+
+export interface ZapOpenApiFileScanOptions extends ZapScanOptionsBase {
+    file: string;
+    target?: string;
     contextId?: string;
 }
 

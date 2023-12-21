@@ -14,7 +14,8 @@ import { Helper } from './classes/Helper';
 import { ZapApiHelper } from './classes/ZapApiHelper';
 import { TaskInput } from './classes/TaskInput';
 import { AjaxSpiderScan } from './classes/AjaxSpiderScan';
-import { OpenApiScan } from './classes/OpenApiScan';
+import { OpenApiUrlScan } from './classes/OpenApiUrlScan';
+import { OpenApiFileScan } from './classes/OpenApiFileScan';
 
 Task.setResourcePath(path.join(__dirname, 'task.json'));
 
@@ -68,8 +69,11 @@ async function run(): Promise<string> {
             taskInputs.MaxMediumRiskAlerts = parseInt(Task.getInput('MaxMediumRiskAlerts'), 10);
             taskInputs.MaxLowRiskAlerts = parseInt(Task.getInput('MaxLowRiskAlerts'), 10);
 
-            //new session:
             const apiHelper: ZapApiHelper = new ZapApiHelper(taskInputs);
+            const requestService: RequestService = new RequestService();
+            const helper: Helper = new Helper();
+
+            //new session:
             if (taskInputs.ClearSession) {
                 await apiHelper.ClearZapSession();
             }
@@ -79,8 +83,6 @@ async function run(): Promise<string> {
                 const idNewContext = await apiHelper.CreateNewContext(taskInputs.NewContextName);
             }
 
-            const requestService: RequestService = new RequestService();
-            const helper: Helper = new Helper();
             const report: Report = new Report(helper, requestService, taskInputs);
 
             const selectedScans: Array<IZapScan> = new Array<IZapScan>();
@@ -103,9 +105,17 @@ async function run(): Promise<string> {
 
             /* Add Open Api Scan is selected */
             if (taskInputs.ExecuteOpenApiScan) {
-                console.log('Open Api scan is selected.');
-                const openApiScan: OpenApiScan = new OpenApiScan(taskInputs);
-                selectedScans.push(openApiScan);
+                await helper.ValidateInputsOpenApi(taskInputs.OpenApiUrl, taskInputs.OpenApiFile);
+                if (taskInputs.OpenApiUrl !== undefined) {
+                    console.log('OpenAPI Scan from Url is selected.');
+                    const openApiScan: OpenApiUrlScan = new OpenApiUrlScan(taskInputs);
+                    selectedScans.push(openApiScan);
+                } else {
+                    console.log('OpenAPI Scan from File is selected.');
+                    const openApiScanFile: OpenApiFileScan = new OpenApiFileScan(taskInputs);
+                    selectedScans.push(openApiScanFile);
+
+                }
             }
 
             /* Add the Active Scan */
@@ -128,7 +138,6 @@ async function run(): Promise<string> {
 
             /* If all scans are successful: 1). Generate the Report 2). Perform the Verifications */
             if (scanStatus.Success) {
-
                 /* Generate the report */
                 console.log('Generating the report...');
                 const isSuccess: boolean = await report.GenerateReport();

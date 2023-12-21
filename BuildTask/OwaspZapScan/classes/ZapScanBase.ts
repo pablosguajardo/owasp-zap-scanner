@@ -103,6 +103,9 @@ export abstract class ZapScanBase implements IZapScan {
         else if (scanType === ZapScanType.Spider) { zapScanType = 'spider'; }
         else if (scanType === ZapScanType.AjaxSpider) {
             zapScanType = 'ajaxSpider';
+        } else if (scanType === ZapScanType.OpenApi) {
+            //for openapi there is no state, once the definition is loaded it runs waiting for the scan result.
+            return Promise.resolve(100);
         }
 
         const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
