@@ -5,7 +5,7 @@ export interface ZapScanOptionsBase {
     apikey: string;
 }
 
-export interface ZapActiveScanOptions extends ZapScanOptionsBase {    
+export interface ZapActiveScanOptions extends ZapScanOptionsBase {
     url: string;
     recurse?: string;
     inScopeOnly?: string;
@@ -23,6 +23,12 @@ export interface ZapSpiderScanOptions extends ZapScanOptionsBase {
     subtreeOnly?: string;
 }
 
+export interface ZapOpenApiScanOptions extends ZapScanOptionsBase {
+    url: string;
+    hostOverride?: string;
+    contextId?: string;
+}
+
 export interface ZapAjaxSpiderScanOptions extends ZapScanOptionsBase {
     url: string;
     inScope?: boolean;
@@ -33,7 +39,7 @@ export interface ZapScanStatusOptions extends ZapScanOptionsBase {
     scanId: number;
 }
 export interface ZapAjaxScanStatusOptions extends ZapScanOptionsBase {
-   
+
 }
 
 export interface ZapScanReportOptions {

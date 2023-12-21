@@ -38,6 +38,11 @@
             "isExpanded": true
         },
         {
+            "name": "openApiScanOptions",
+            "displayName": "Open Api Scan Options (For Beta testers)",
+            "isExpanded": true
+        },
+        {
             "name": "activeScanOptions",
             "displayName": "Active Scan Options",
             "isExpanded": false
@@ -89,6 +94,24 @@
             "defaultValue": "true",
             "groupName": "apiConfiguration",
             "helpMarkDown": "Creates a new session, optionally overwriting existing files. If a relative path is specified it will be resolved against the 'session' directory in ZAP 'home' dir."
+        },
+        {
+            "name": "NewContext",
+            "type": "boolean",
+            "label": "New Context (For Beta testers)",
+            "required": false,
+            "defaultValue": "false",
+            "groupName": "apiConfiguration",
+            "helpMarkDown": "Create a new Context, optionally."
+        },
+        {
+            "name": "NewContextName",
+            "type": "string",
+            "label": "New Context Name",
+            "required": true,
+            "groupName": "apiConfiguration",
+            "helpMarkDown": "The name of the new context.",
+            "visibleRule": "NewContext = true"
         },
         {
             "name": "ExecuteAjaxSpiderScan",
@@ -168,6 +191,41 @@
             "groupName": "spiderScanOptions",
             "helpMarkDown": "'maxChildren' parameter can be set to limit the number of children scanned and the 'recurse' parameter can be used to prevent the spider from seeding recursively.",
             "visibleRule": "ExecuteSpiderScan = true"
+        },
+        {
+            "name": "ExecuteOpenApiScan",
+            "type": "boolean",
+            "label": "Execute Open Api Scan",
+            "required": false,
+            "groupName": "openApiScanOptions",
+            "helpMarkDown": "The OpenAPI Support add-on for ZAP allows users to spider and import OpenAPI (Swagger) definitions, versions 1.2, 2.0, and 3.0. This add-on automatically detects any OpenAPI definitions and spiders them as long as they are in scope."
+        },
+        {
+            "name": "OpenApiUrl",
+            "type": "string",
+            "label": "Url",
+            "required": true,
+            "groupName": "openApiScanOptions",
+            "helpMarkDown": "Url: The URL locating the OpenAPI definition.",
+            "visibleRule": "ExecuteOpenApiScan = true"
+        },
+        {
+            "name": "OpenApiHostOverride",
+            "type": "string",
+            "label": "HostOverride",
+            "required": true,
+            "groupName": "openApiScanOptions",
+            "helpMarkDown": "HostOverride: The Target URL (called hostOverride for historical reasons) to override the server URL present in the definition.",
+            "visibleRule": "ExecuteOpenApiScan = true"
+        },
+        {
+            "name": "OpenApiContextId",
+            "type": "string",
+            "label": "Context ID",
+            "required": false,
+            "groupName": "openApiScanOptions",
+            "helpMarkDown": "Scan context identifier",
+            "visibleRule": "ExecuteOpenApiScan = true"
         },
         {
             "name": "ExecuteActiveScan",

@@ -18,7 +18,7 @@ export class TaskInput {
     set ZapApiUrl(value: string) {
         this._zapApiUrl = value;
     }
-    
+
     get ZapApiUrl(): string {
         if (this._zapApiUrl) {
             return this._zapApiUrl;
@@ -27,7 +27,7 @@ export class TaskInput {
         throw new Error('The ZAP API URL is required but not set.');
     }
 
-    
+
     private _targetUrl: string;
     set TargetUrl(value: string) {
         this._targetUrl = value;
@@ -41,6 +41,18 @@ export class TaskInput {
         throw new Error('The Target URL is required but not set.');
     }
 
+    private _newContext: boolean;
+    set NewContext(value: boolean) {
+        this._newContext = value;
+    }
+
+    get NewContext(): boolean {
+        if (this._newContext) {
+            return this._newContext;
+        }
+        return false;
+    }
+
     private _clearSession: boolean;
     set ClearSession(value: boolean) {
         this._clearSession = value;
@@ -52,6 +64,71 @@ export class TaskInput {
         }
         return false;
     }
+
+    private _newContextName: string;
+    set NewContextName(value: string) {
+        this._newContextName = value;
+    }
+
+    get NewContextName(): string {
+        if (this._newContextName) {
+            return this._newContextName;
+        }
+        return '';
+    }
+
+
+    /* Open Api Scan */
+    private _executeOpenApiScan: boolean;
+    set ExecuteOpenApiScan(value: boolean) {
+        this._executeOpenApiScan = value;
+    }
+
+    get ExecuteOpenApiScan(): boolean {
+        if (this._executeOpenApiScan) {
+            return this._executeOpenApiScan;
+        }
+        return false;
+    }
+
+    private _openApiUrl: string;
+    set OpenApiUrl(value: string) {
+        this._openApiUrl = value;
+    }
+
+    get OpenApiUrl(): string {
+        if (this._openApiUrl) {
+            return this._openApiUrl;
+        }
+        return '';
+    }
+
+    private _openApiHostOverride: string;
+    set OpenApiHostOverride(value: string) {
+        this._openApiHostOverride = value;
+    }
+
+    get OpenApiHostOverride(): string {
+        if (this._openApiHostOverride) {
+            return this._openApiHostOverride;
+        }
+        return '';
+    }
+
+    private _openApiContextId: string;
+    set OpenApiContextId(value: string) {
+        this._openApiContextId = value;
+    }
+
+    get OpenApiContextId(): string {
+        if (this._openApiContextId) {
+            return this._openApiContextId;
+        }
+        return '';
+    }
+
+    
+    /* End Open Api Scan */
 
     /* Ajax Spider Scan */
     private _executeAjaxSpiderScan: boolean;
@@ -77,7 +154,7 @@ export class TaskInput {
         }
         return false;
     }
-    
+
     private _ajaxContextName: string;
     set AjaxContextName(value: string) {
         this._ajaxContextName = value;
@@ -89,6 +166,7 @@ export class TaskInput {
         }
         return '';
     }
+
     private _ajaxInScope: boolean;
     set AjaxInScope(value: boolean) {
         this._ajaxInScope = value;
@@ -126,8 +204,8 @@ export class TaskInput {
         }
         return false;
     }
-    
-    
+
+
     private _subTreeOnly: boolean;
     set SubTreeOnly(value: boolean) {
         this._subTreeOnly = value;
@@ -139,8 +217,8 @@ export class TaskInput {
         }
         return false;
     }
-    
-    
+
+
     private _maxChildrenToCrawl: string;
     set MaxChildrenToCrawl(value: string) {
         this._maxChildrenToCrawl = value;
@@ -259,7 +337,7 @@ export class TaskInput {
     }
 
 
-    
+
     /* Reporting */
     private _reportType: string;
     set ReportType(value: string) {
