@@ -88,10 +88,10 @@ export class Helper {
         return new Promise<boolean>((resolve, reject) => {
             let countParams: number = 0;
             let message: string;
-            if (url !== undefined) {
+            if (url !== '') {
                 countParams++;
             }
-            if (file !== undefined) {
+            if (file !== '') {
                 countParams++;
             }
             if (countParams === 0) {
