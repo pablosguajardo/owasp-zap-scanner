@@ -68,18 +68,15 @@ async function run(): Promise<string> {
             taskInputs.MaxMediumRiskAlerts = parseInt(Task.getInput('MaxMediumRiskAlerts'), 10);
             taskInputs.MaxLowRiskAlerts = parseInt(Task.getInput('MaxLowRiskAlerts'), 10);
 
-
+            //new session:
             const apiHelper: ZapApiHelper = new ZapApiHelper(taskInputs);
             if (taskInputs.ClearSession) {
                 await apiHelper.ClearZapSession();
             }
+
             //new context
             if (taskInputs.NewContext) {
                 const idNewContext = await apiHelper.CreateNewContext(taskInputs.NewContextName);
-                if (idNewContext === 0) {
-                    const message: string = `The new context ${taskInputs.NewContextName} already exists`;
-                    reject(message);
-                }
             }
 
             const requestService: RequestService = new RequestService();
@@ -110,7 +107,7 @@ async function run(): Promise<string> {
                 const openApiScan: OpenApiScan = new OpenApiScan(taskInputs);
                 selectedScans.push(openApiScan);
             }
-        
+
             /* Add the Active Scan */
             if (taskInputs.ExecuteActiveScan) {
                 console.log('Active scan is selected.');

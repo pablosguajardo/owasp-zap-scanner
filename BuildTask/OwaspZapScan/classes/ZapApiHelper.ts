@@ -62,12 +62,16 @@ export class ZapApiHelper {
                     const result = JSON.parse(res);
                     //ej: existe: {"code":"already_exists","message":"Ya Existe"}
                     //ej: ok: {"contextId":"2"}
-                    console.log('Successfully Create new Zap context');
                     Task.debug(`Status Result: ${JSON.stringify(res)}`);
                     if (result.contextId !== undefined) {
+                        console.log(`Successfully: The new Zap context ${nameContext} was created. Id: [${result.contextId}]`);
                         resolve(result.contextId);
+                    } else if (result.message !== undefined) {
+                        const message: string = `ERROR creating the new context ${nameContext}: ${result.message}`;
+                        reject(message);
                     } else {
-                        resolve(0);
+                        const message: string = `Context ${nameContext} could not be created.`;
+                        reject(message);
                     }
                 })
                 .catch((err: any) => {
