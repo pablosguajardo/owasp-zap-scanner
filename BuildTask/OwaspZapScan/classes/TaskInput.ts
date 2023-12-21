@@ -138,8 +138,6 @@ export class TaskInput {
         }
         return '';
     }
-
-    
     /* End Open Api Scan */
 
     /* Ajax Spider Scan */
