@@ -20,7 +20,7 @@ export class OpenApiUrlScan extends ZapScanBase {
             apikey: this.taskInputs.ZapApiKey,
             url: this.taskInputs.OpenApiUrl,
             hostOverride: this.taskInputs.OpenApiHostOverride,
-            contextId: this.taskInputs.ContextId,
+            contextId: this.taskInputs.OpenApiContextId,
             formMethod: 'GET',
             zapapiformat: 'JSON'
         };

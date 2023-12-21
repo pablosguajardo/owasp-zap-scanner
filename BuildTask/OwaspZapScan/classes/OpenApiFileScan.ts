@@ -20,7 +20,7 @@ export class OpenApiFileScan extends ZapScanBase {
             apikey: this.taskInputs.ZapApiKey,
             file: this.taskInputs.OpenApiFile,
             target: this.taskInputs.OpenApiHostOverride,
-            contextId: this.taskInputs.ContextId,
+            contextId: this.taskInputs.OpenApiContextId,
             formMethod: 'GET',
             zapapiformat: 'JSON'
         };
