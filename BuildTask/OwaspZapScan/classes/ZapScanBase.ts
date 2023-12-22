@@ -27,37 +27,44 @@ export abstract class ZapScanBase implements IZapScan {
             console.log(`ExecuteScan ${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
         }
         const scanResult: ScanResult = { Success: false };
-
         return new Promise<ScanResult>((resolve, reject) => {
-            RequestPromise(this.requestOptions)
-                .then(async (res: any) => {
-                    if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
-                        scanResult.Success = true;
-                    } else {
-                        const result: ZapScanResult = JSON.parse(res);
-                        //ver que pasa en ajax:
-                        if (process.env.NODE_ENV !== 'test') {
-                            console.log(`ExecuteScan res: ${res}`);
-                        }
-                        if (this.scanType === Constants.AJAX_SPIDER_SCAN_NAME) {
-                            console.log(`Owasp Zap ${this.scanType} Initiated. Result: ${result.result}`);
+            try {
+                RequestPromise(this.requestOptions)
+                    .then(async (res: any) => {
+                        if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
+                            scanResult.Success = true;
                         } else {
-                            console.log(`Owasp Zap ${this.scanType} Initiated. ID: ${result.scan}`);
+                            const result: ZapScanResult = JSON.parse(res);
+                            //ver que pasa en ajax:
+                            if (process.env.NODE_ENV !== 'test') {
+                                console.log(`ExecuteScan res: ${res}`);
+                            }
+                            if (this.scanType === Constants.AJAX_SPIDER_SCAN_NAME) {
+                                console.log(`Owasp Zap ${this.scanType} Initiated. Result: ${result.result}`);
+                            } else {
+                                console.log(`Owasp Zap ${this.scanType} Initiated. ID: ${result.scan}`);
+                            }
+                            scanResult.Success = await this.CheckScanStatus(result.scan, this.zapScanType);
+                            if (!scanResult.Success) {
+                                scanResult.Message = `${this.scanType} status check failed.`;
+                                reject(scanResult);
+                            }
                         }
-                        scanResult.Success = await this.CheckScanStatus(result.scan, this.zapScanType);
-                        if (!scanResult.Success) {
-                            scanResult.Message = `${this.scanType} status check failed.`;
-                            reject(scanResult);
-                        }
-                    }
-                    resolve(scanResult);
-                })
-                .catch((err: any) => {
-                    scanResult.Success = false;
-                    scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan: ${err.message}` : err.message || err;
-                    reject(scanResult);
-                });
+                        resolve(scanResult);
+                    })
+                    .catch((err: any) => {
+                        scanResult.Success = false;
+                        scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan: ${err.stack} err: ${err.message}` : err.message || err;
+                        reject(scanResult);
+                    });
+            } catch (err) {
+                scanResult.Success = false;
+                scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan Request: ${err.stack} err: ${err.message}` : err.message || err;
+                reject(scanResult);
+            }
+
         });
+
     }
 
     protected CheckScanStatus(scanId: number, scanType: ZapScanType): Promise<boolean> {
@@ -87,7 +94,6 @@ export abstract class ZapScanBase implements IZapScan {
                         console.log(`${this.scanType} In Progress: ${scanStatus}%`);
                         scanCompleted = false;
                     }
-
                     previousScanStatus = scanStatus;
                 }
                 resolve(scanCompleted);
@@ -124,7 +130,7 @@ export abstract class ZapScanBase implements IZapScan {
             console.log(`GetScanStatus: ${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
             Task.debug(`GetScanStatus: ${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
         }
-         return new Promise<number>((resolve, reject) => {
+        return new Promise<number>((resolve, reject) => {
             RequestPromise(requestOptions)
                 .then((res: any) => {
                     let statusNumber;
