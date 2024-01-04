@@ -39,7 +39,7 @@
         },
         {
             "name": "openApiScanOptions",
-            "displayName": "Open Api Scan Options (For Beta testers)",
+            "displayName": "Open Api Scan Options",
             "isExpanded": true
         },
         {
@@ -98,7 +98,7 @@
         {
             "name": "NewContext",
             "type": "boolean",
-            "label": "New Context (For Beta testers)",
+            "label": "New Context",
             "required": false,
             "defaultValue": "false",
             "groupName": "apiConfiguration",
@@ -206,7 +206,7 @@
             "label": "Url",
             "required": false,
             "groupName": "openApiScanOptions",
-            "helpMarkDown": "Enter data in URL or File. Not both. Url: The URL locating the OpenAPI definition. https://www.zaproxy.org/docs/desktop/addons/openapi-support",
+            "helpMarkDown": "Enter data in URL or File. Not both. Url: The URL locating the OpenAPI definition. The url must exist and be accessible from the server running ZAP. If not, it will give an error. https://www.zaproxy.org/docs/desktop/addons/openapi-support",
             "visibleRule": "ExecuteOpenApiScan = true"
         },
         {
