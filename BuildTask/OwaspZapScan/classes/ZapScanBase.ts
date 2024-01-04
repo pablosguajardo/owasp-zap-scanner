@@ -53,6 +53,9 @@ export abstract class ZapScanBase implements IZapScan {
                         resolve(scanResult);
                     })
                     .catch((err: any) => {
+                        if (process.env.NODE_ENV !== 'test') {
+                            console.log(`ExecuteScan err: ${err}`);
+                        }
                         scanResult.Success = false;
                         scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan: ${err.stack} err: ${err.message}` : err.message || err;
                         reject(scanResult);
@@ -62,9 +65,7 @@ export abstract class ZapScanBase implements IZapScan {
                 scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan Request: ${err.stack} err: ${err.message}` : err.message || err;
                 reject(scanResult);
             }
-
         });
-
     }
 
     protected CheckScanStatus(scanId: number, scanType: ZapScanType): Promise<boolean> {
