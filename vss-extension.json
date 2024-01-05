@@ -25,7 +25,7 @@
             "path": "screenshots/configure-reports.PNG"
         }
     ],
-    "tags": [ "build", "release", "security", "testing", "owasp", "zaproxy", "security-scan", "security-testing", "vulnerabilities", "pen-testing", "penetration-testing", "scan", "scanner" ],
+    "tags": [ "build", "release", "security", "testing", "owasp", "zaproxy", "security-scan", "security-testing", "vulnerabilities", "pen-testing", "penetration-testing", "scan", "scanner", "open api scan", "Ajax spider scan", "Spider scan", "Active Scan", "OWASP ZAP Report" ],
     "icons": {
         "default": "icon.png"        
     },
