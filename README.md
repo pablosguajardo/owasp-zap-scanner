@@ -6,6 +6,7 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/pablosguajardo/owasp-zap-scanner/blob/master/LICENSE.md)
 [![Visual Studio Marketplace](https://img.shields.io/badge/Visual%20Studio%20Marketplace-install-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=solucionespsg.owasp-zap-scan-psg)
 
+
 # Owasp Zap Scanner
 
 This project is a Azure DevOps task that allows users to integrate Owasp Zap security analysis into their VSTS pipelines.
@@ -21,21 +22,21 @@ Follow the instructions below to add and configure the Owasp Zap Scanner in your
 ### Add the Owasp Zap Scanner
 Install the Owasp Zap Scanner in your Visual Studio Team Services account and search for the task in the available tasks. The task will appear in the _Test_ section of the task list. Add it to your build/release task.
 
-!Add Owasp Zap Scanner
-
 ![Required Configuration Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/zap-api-configuration.PNG)
-
 
 ### Required Options
 * **ZAP API Url** : The fully qualified domain name (FQDN) with out the protocol. (Eg. _zap.example.com_)
 * **API Key** : The API key for ZAP. Details about obtaining the API can be found on the Official Documentation
 * **Target URL** : Target URL where the active scan is performed against.
 
+### Optional Options
+* **New Session** : Creates a new session, optionally overwriting existing files. If a relative path is specified it will be resolved against the 'session' directory in ZAP 'home' dir.
+* **New Context** : Create a new Context, optionally.
+
 ## Ajax Spider Scan Options
 This configuration section includes the parameters that need to be sent to perform the active scan against the target.
 
 ![Ajax Spider Scan Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/ajax-spider-scan-options.png)
-
 
 ### Available Options
 * **Execute Ajax Spider Scan** : Enable to run a spider scan on the target.
@@ -54,6 +55,18 @@ This configuration section includes the parameters that need to be sent to perfo
 * **Subtree Only** : _(Optional)_ Enable to restrict the spider under the target url subtree.
 * **Context Name** : _(Optional)_ The name for any defined context. If the value does not match a defined context then an error will occur.
 * **Max Children** : _(Optional)_ Set to limit the number of children scanned.
+
+## Open Api Scan Options
+This configuration section includes the parameters that need to be sent to perform the active scan against the target.
+
+![Open Api Scan Options](https://raw.githubusercontent.com/pablosguajardo/owasp-zap-scanner/master/screenshots/open-api-scan-options.png)
+
+### Available Options
+* **Execute Open Api Scan** : Enable to run a Open Api scan on the target.
+* **Url** : Enter data in URL or File. Not both. Url: The URL locating the OpenAPI definition. The url must exist and be accessible from the server running ZAP. If not, it will give an error. https://www.zaproxy.org/docs/desktop/addons/openapi-support
+* **File** : Enter data in File or URL. Not both. The file that contains the OpenAPI definition. https://www.zaproxy.org/docs/desktop/addons/openapi-support
+* **HostOverride/Target** : _(Optional)_ HostOverride: The Target URL (called hostOverride for historical reasons) to override the server URL present in the definition. Target: The Target URL to override the server URL present in the definition. https://www.zaproxy.org/docs/desktop/addons/openapi-support
+* **Context ID** : _(Optional)_ Scan context identifier. https://www.zaproxy.org/docs/desktop/addons/openapi-support
 
 ## Active Scan Options
 This configuration section includes the parameters that need to be sent to perform the active scan against the target.
@@ -93,6 +106,13 @@ This configuration section includes the parameters that need to be sent to perfo
 * **Report Filename** : Name of the report file, without the extension. Extension is determined by the _**Report Type**_. Eg. _OWASP-ZAP-Report-2017-00-00_.
 
 
+## Additional
+
+On Windows servers you can complement the use of this extension with:
+
+https://marketplace.visualstudio.com/items?itemName=solucionespsg.OwaspZapOnPremiseStartStop
+
+With this extension you will be able to remotely start a new Owazap session on a new port, scan the URL and then stop the started session.
 
 # Contributing to Owasp Zap Scanner for Azure DevOps
 
