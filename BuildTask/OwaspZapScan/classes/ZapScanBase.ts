@@ -62,7 +62,7 @@ export abstract class ZapScanBase implements IZapScan {
                     });
             } catch (err) {
                 scanResult.Success = false;
-                scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan Request: ${err.stack} err: ${err.message}` : err.message || err;
+                scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan Request: ${err}` : err.message || err;
                 reject(scanResult);
             }
         });
