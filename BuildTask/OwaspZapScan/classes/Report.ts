@@ -53,7 +53,7 @@ export class Report {
         this._requestOptions.uri = `${this._requestOptions.uri}/${reportType}/`;
 
         /* istanbul ignore if */
-        if (process.env.NODE_ENV !== 'test') {
+        if (process.env.NODE_ENV === 'dev') {
             Task.debug(`Active Scan Results | ZAP API Call: ${this._requestOptions.uri} | Request Options: ${JSON.stringify(this._requestOptions)}`);
             console.log(`Active Scan Results | ZAP API Call: ${this._requestOptions.uri} | Request Options: ${JSON.stringify(this._requestOptions)}`);
         }
@@ -100,7 +100,7 @@ export class Report {
         const fullFilePath: string = path.normalize(`${destination}/${fileName}.${ext}`);
 
         /* istanbul ignore if */
-        if (process.env.NODE_ENV !== 'test') {
+        if (process.env.NODE_ENV === 'dev') {
             Task.debug(`Report Filename: ${fullFilePath}`);
             console.log(`Report Filename: ${fullFilePath}`);
         }
@@ -130,7 +130,7 @@ export class Report {
 
     PrintResult(highAlerts: number, mediumAlerts: number, lowAlerts: number, infoAlerts: number): void {
         /* istanbul ignore if */
-        if (process.env.NODE_ENV !== 'test') {
+        if (process.env.NODE_ENV === 'dev') {
             console.log();
             console.log('**************************');
             console.log('*   Active Scan Result   *');

@@ -91,7 +91,7 @@ async function run(): Promise<string> {
                 const idNewContext = await apiHelper.CreateNewContext(taskInputs.NewContextName);
             }
 
-            if (process.env.NODE_ENV !== 'test') {
+            if (process.env.NODE_ENV === 'dev') {
                 console.log(`OpenApiUrl: ${taskInputs.OpenApiUrl} OpenApiFile: ${taskInputs.OpenApiFile}`);
             }
             const report: Report = new Report(helper, requestService, taskInputs);
@@ -159,7 +159,7 @@ async function run(): Promise<string> {
                 reject('A scan failed to complete.');
             }
         } catch (err) {
-            const errmsg: any = process.env.NODE_ENV !== 'test' ? err.stack + err.message : err.stack || err;
+            const errmsg: any = process.env.NODE_ENV === 'dev' ? err.stack + err.message : err.stack || err;
             reject(errmsg);
         }
     });

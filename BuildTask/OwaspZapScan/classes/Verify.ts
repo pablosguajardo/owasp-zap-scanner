@@ -24,7 +24,7 @@ export class Verify {
         const alertResult: AlertResult = this._helper.ProcessAlerts(xmlReport, this._taskInputs.TargetUrl);
 
         /* istanbul ignore if */
-        if (process.env.NODE_ENV !== 'test') {
+        if (process.env.NODE_ENV === 'dev') {
             Task.debug(`
                 Scan Result: 
                 High Risk Alerts: ${alertResult.HighAlerts}
@@ -42,21 +42,21 @@ export class Verify {
             /* Verify alerts with in the limit */
             if (this._taskInputs.MaxHighRiskAlerts < alertResult.HighAlerts) {
                 /* istanbul ignore if  */
-                if (process.env.NODE_ENV !== 'test') {
+                if (process.env.NODE_ENV === 'dev') {
                     Task.setResult(Task.TaskResult.Failed, `High Risk Alert Threshold Exceeded. Threshold: ${this._taskInputs.MaxHighRiskAlerts}, Actual: ${alertResult.HighAlerts}`);
                 }
             }
 
             if (this._taskInputs.MaxMediumRiskAlerts < alertResult.MediumAlerts) {
                 /* istanbul ignore if  */
-                if (process.env.NODE_ENV !== 'test') {
+                if (process.env.NODE_ENV === 'dev') {
                     Task.setResult(Task.TaskResult.Failed, `Medium Risk Alert Threshold Exceeded. Threshold: ${this._taskInputs.MaxMediumRiskAlerts}, Actual: ${alertResult.MediumAlerts}`);
                 }
             }
 
             if (this._taskInputs.MaxLowRiskAlerts < alertResult.LowAlerts) {
                 /* istanbul ignore if  */
-                if (process.env.NODE_ENV !== 'test') {
+                if (process.env.NODE_ENV === 'dev') {
                     Task.setResult(Task.TaskResult.Failed, `Low Alert Risk Threshold Exceeded. Threshold: ${this._taskInputs.MaxLowRiskAlerts}, Actual: ${alertResult.LowAlerts}`);
                 }
             }
