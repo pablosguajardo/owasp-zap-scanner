@@ -142,9 +142,9 @@ async function run(): Promise<string> {
                 scanStatus = await scan.ExecuteScan();
 
                 if (!scanStatus.Success) {
-                    let messageErr: string ="" ;
-                    if(scan.scanType === Constants.OPENAPI_FILE_SCAN_NAME || scan.scanType === Constants.OPENAPI_URL_SCAN_NAME){
-                        messageErr = ` Message: ${scanStatus.Message}` ;
+                    let messageErr: string = '';
+                    if (scan.scanType === Constants.OPENAPI_FILE_SCAN_NAME || scan.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
+                        messageErr = ` Message: ${scanStatus.Message}`;
                     }
                     const message: string = `The ${scan.scanType} failed with the error. Status: ${scanStatus.Success}${messageErr}`;
                     reject(message);
