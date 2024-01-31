@@ -16,6 +16,7 @@ import { TaskInput } from './classes/TaskInput';
 import { AjaxSpiderScan } from './classes/AjaxSpiderScan';
 import { OpenApiUrlScan } from './classes/OpenApiUrlScan';
 import { OpenApiFileScan } from './classes/OpenApiFileScan';
+import { Constants } from './classes/Constants';
 
 Task.setResourcePath(path.join(__dirname, 'task.json'));
 
@@ -141,8 +142,11 @@ async function run(): Promise<string> {
                 scanStatus = await scan.ExecuteScan();
 
                 if (!scanStatus.Success) {
-                    const messageErr: string = process.env.NODE_ENV !== 'test' ? ` Message: ${scanStatus.Message}` : '';
-                    const message: string = `The ${scan.scanType} failed with the Error: ${scanStatus.Success}${messageErr}`;
+                    let messageErr: string ="" ;
+                    if(scan.scanType === Constants.OPENAPI_FILE_SCAN_NAME || scan.scanType === Constants.OPENAPI_URL_SCAN_NAME){
+                        messageErr = ` Message: ${scanStatus.Message}` ;
+                    }
+                    const message: string = `The ${scan.scanType} failed with the error. Status: ${scanStatus.Success}${messageErr}`;
                     reject(message);
                 }
             }
