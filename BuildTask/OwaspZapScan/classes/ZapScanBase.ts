@@ -22,7 +22,7 @@ export abstract class ZapScanBase implements IZapScan {
     }
 
     ExecuteScan(): Promise<ScanResult> {
-        if (process.env.NODE_ENV !== 'test') {
+        if (process.env.NODE_ENV === 'dev') {
             Task.debug(`ExecuteScan ${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
             console.log(`ExecuteScan ${this.scanType} | Target URL: ${this.requestOptions.uri} | Scan Options: ${JSON.stringify(this.requestOptions.qs)}`);
         }
@@ -35,7 +35,7 @@ export abstract class ZapScanBase implements IZapScan {
                             scanResult.Success = true;
                         } else {
                             const result: ZapScanResult = JSON.parse(res);
-                            if (process.env.NODE_ENV !== 'test') {
+                            if (process.env.NODE_ENV === 'dev') {
                                 console.log(`ExecuteScan res: ${res}`);
                             }
                             if (this.scanType === Constants.AJAX_SPIDER_SCAN_NAME) {
@@ -55,7 +55,7 @@ export abstract class ZapScanBase implements IZapScan {
                         if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
                             console.log(`##[Error]OpenApi ExecuteScan http status code error: ${err.statusCode}`);
                         }
-                        if (process.env.NODE_ENV !== 'test') {
+                        if (process.env.NODE_ENV === 'dev') {
                             console.log('Err ExecuteScan', err);
                             scanResult.Message = `Err ExecuteScan: ${err}`;
                         } else {
@@ -66,7 +66,7 @@ export abstract class ZapScanBase implements IZapScan {
                     });
             } catch (err) {
                 scanResult.Success = false;
-                if (process.env.NODE_ENV !== 'test') {
+                if (process.env.NODE_ENV === 'dev') {
                     console.log(`Error ExecuteScan Request: ${err}`);
                     scanResult.Message = `Error ExecuteScan Request: ${err}`;
                 } else {
@@ -75,7 +75,7 @@ export abstract class ZapScanBase implements IZapScan {
                 reject(scanResult);
             }
         }).catch((err: any) => {
-            if (process.env.NODE_ENV !== 'test') {
+            if (process.env.NODE_ENV === 'dev') {
                 console.log(`ExecuteScan Error: ${err}`);
                 scanResult.Message = `ExecuteScan Error: ${err}`;
             } else {
@@ -90,7 +90,7 @@ export abstract class ZapScanBase implements IZapScan {
         let previousScanStatus: number = 0;
         let scanCompleted: boolean = false;
 
-        if (process.env.NODE_ENV !== 'test') {
+        if (process.env.NODE_ENV === 'dev') {
             console.log(`CheckScanStatus: ${this.scanType}`);
         }
         return new Promise<boolean>(async (resolve, reject) => {
@@ -145,7 +145,7 @@ export abstract class ZapScanBase implements IZapScan {
             uri: `${this.taskInputs.ZapApiUrl}/JSON/${zapScanType}/view/status/`,
             qs: statusOptions
         };
-        if (process.env.NODE_ENV !== 'test') {
+        if (process.env.NODE_ENV === 'dev') {
             console.log(`GetScanStatus: ${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
             Task.debug(`GetScanStatus: ${this.scanType} | ZAP API Call: ${this.requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
         }
@@ -165,7 +165,7 @@ export abstract class ZapScanBase implements IZapScan {
                     } else {
                         const result: ZapScanStatus = JSON.parse(res);
                         Task.debug(`${this.scanType} | Status Result: ${JSON.stringify(res)}`);
-                        if (process.env.NODE_ENV !== 'test') {
+                        if (process.env.NODE_ENV === 'dev') {
                             console.log(`GetScanStatus. ${this.scanType} | Status Result: ${JSON.stringify(res)}`);
                         }
                         statusNumber = result.status;

@@ -27,7 +27,7 @@ export class Helper {
                 return;
             }
             /* istanbul ignore if */
-            if (process.env.NODE_ENV !== 'test') {
+            if (process.env.NODE_ENV === 'dev') {
                 console.log('++++++++++++++++++');
                 console.log(res);
                 console.log('++++++++++++++++++');
