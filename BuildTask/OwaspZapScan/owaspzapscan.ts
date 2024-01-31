@@ -126,31 +126,21 @@ async function run(): Promise<string> {
                 const spiderAjaxScan: AjaxSpiderScan = new AjaxSpiderScan(taskInputs);
                 selectedScans.push(spiderAjaxScan);
             }
-
-
-
             /* Add the Active Scan */
             if (taskInputs.ExecuteActiveScan) {
                 console.log('Active scan is selected.');
                 const activeScan: ActiveScan = new ActiveScan(taskInputs);
                 selectedScans.push(activeScan);
             }
-
             /* Execute the Scans */
             for (let i: number = 0; i < selectedScans.length; i++) {
                 const scan: IZapScan = selectedScans[i];
                 scanStatus = await scan.ExecuteScan();
-
                 if (!scanStatus.Success) {
-                    let messageErr: string = '';
-                    if (scan.scanType === Constants.OPENAPI_FILE_SCAN_NAME || scan.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
-                        messageErr = ` Message: ${scanStatus.Message}`;
-                    }
-                    const message: string = `The ${scan.scanType} failed with the error. Status: ${scanStatus.Success}${messageErr}`;
+                    const message: string = `The ${scan.scanType} failed with the error. Status: ${scanStatus.Success}`;
                     reject(message);
                 }
             }
-
             /* If all scans are successful: 1). Generate the Report 2). Perform the Verifications */
             if (scanStatus.Success) {
                 /* Generate the report */
@@ -160,7 +150,6 @@ async function run(): Promise<string> {
                 if (!isSuccess) {
                     hasIssues = isSuccess;
                 }
-
                 /* Perform the Verifications and Print the report */
                 const verify: Verify = new Verify(helper, report, taskInputs);
                 verify.Assert();
@@ -174,7 +163,6 @@ async function run(): Promise<string> {
             reject(errmsg);
         }
     });
-
     return promise;
 }
 
