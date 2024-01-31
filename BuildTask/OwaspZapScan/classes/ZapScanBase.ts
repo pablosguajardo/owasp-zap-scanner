@@ -53,10 +53,10 @@ export abstract class ZapScanBase implements IZapScan {
                     })
                     .catch((err: any) => {
                         if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
-                            console.log(`Error in OpenApi ExecuteScan http status code error: ${err.statusCode}`, err);
+                            console.log(`##[Error]OpenApi ExecuteScan http status code error: ${err.statusCode}`);
                         }
                         if (process.env.NODE_ENV !== 'test') {
-                            console.log(`Err ExecuteScan : ${err}`);
+                            console.log('Err ExecuteScan',err);
                             scanResult.Message = `Err ExecuteScan: ${err}`;
                         } else {
                             scanResult.Message = err.message || err;
