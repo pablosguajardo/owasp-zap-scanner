@@ -35,7 +35,6 @@ export abstract class ZapScanBase implements IZapScan {
                             scanResult.Success = true;
                         } else {
                             const result: ZapScanResult = JSON.parse(res);
-                            //ver que pasa en ajax:
                             if (process.env.NODE_ENV !== 'test') {
                                 console.log(`ExecuteScan res: ${res}`);
                             }
@@ -53,15 +52,34 @@ export abstract class ZapScanBase implements IZapScan {
                         resolve(scanResult);
                     })
                     .catch((err: any) => {
+                        if (process.env.NODE_ENV !== 'test') {
+                            console.log(`Err ExecuteScan : ${err}`);
+                            scanResult.Message = `Err ExecuteScan: ${err}`;
+                        } else {
+                            scanResult.Message = err.message || err;
+                        }
                         scanResult.Success = false;
-                        scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan: ${err}` : err.message || err;
                         reject(scanResult);
                     });
             } catch (err) {
                 scanResult.Success = false;
-                scanResult.Message = process.env.NODE_ENV !== 'test' ? `Error ExecuteScan Request: ${err.stack} err: ${err.message}` : err.message || err;
+                if (process.env.NODE_ENV !== 'test') {
+                    console.log(`Error ExecuteScan Request: ${err}`);
+                    scanResult.Message = `Error ExecuteScan Request: ${err}`;
+                } else {
+                    scanResult.Message = err.message || err;
+                }
                 reject(scanResult);
             }
+        }).catch((err: any) => {
+            if (process.env.NODE_ENV !== 'test') {
+                console.log(`ExecuteScan Error: ${err}`);
+                scanResult.Message = `ExecuteScan Error: ${err}`;
+            } else {
+                scanResult.Message = err.message || err;
+            }
+            scanResult.Success = false;
+            return scanResult;
         });
     }
 
