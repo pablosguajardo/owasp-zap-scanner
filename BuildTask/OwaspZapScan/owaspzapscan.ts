@@ -141,7 +141,8 @@ async function run(): Promise<string> {
                 scanStatus = await scan.ExecuteScan();
 
                 if (!scanStatus.Success) {
-                    const message: string = `The ${scan.scanType} failed with the Error: ${scanStatus.Success}`;
+                    const messageErr: string = process.env.NODE_ENV !== 'test' ? ` Message: ${scanStatus.Message}` : '';
+                    const message: string = `The ${scan.scanType} failed with the Error: ${scanStatus.Success}${messageErr}`;
                     reject(message);
                 }
             }
