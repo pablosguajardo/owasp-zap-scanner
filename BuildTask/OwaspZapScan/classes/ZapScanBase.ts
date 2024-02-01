@@ -60,6 +60,10 @@ export abstract class ZapScanBase implements IZapScan {
                             scanResult.Message = 'Give error but continues by parameter: ContinueOnUrlError';
                             scanResult.Success = true;
                             resolve(scanResult);
+                        } else {
+                            scanResult.Message = messageApi;
+                            scanResult.Success = false;
+                            reject(scanResult);
                         }
                     } else {
                         if (process.env.NODE_ENV === 'dev') {
