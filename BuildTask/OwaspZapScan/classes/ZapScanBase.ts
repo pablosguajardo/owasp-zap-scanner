@@ -28,57 +28,46 @@ export abstract class ZapScanBase implements IZapScan {
         }
         const scanResult: ScanResult = { Success: false };
         return new Promise<ScanResult>((resolve, reject) => {
-            try {
-                RequestPromise(this.requestOptions)
-                    .then(async (res: any) => {
-                        if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
-                            scanResult.Success = true;
-                        } else {
-                            const result: ZapScanResult = JSON.parse(res);
-                            if (process.env.NODE_ENV === 'dev') {
-                                console.log(`ExecuteScan res: ${res}`);
-                            }
-                            if (this.scanType === Constants.AJAX_SPIDER_SCAN_NAME) {
-                                console.log(`Owasp Zap ${this.scanType} Initiated. Result: ${result.result}`);
-                            } else {
-                                console.log(`Owasp Zap ${this.scanType} Initiated. ID: ${result.scan}`);
-                            }
-                            scanResult.Success = await this.CheckScanStatus(result.scan, this.zapScanType);
-                            if (!scanResult.Success) {
-                                scanResult.Message = `${this.scanType} status check failed.`;
-                                reject(scanResult);
-                            }
-                        }
-                        resolve(scanResult);
-                    })
-                    .catch((err: any) => {
-                        if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
-                            const messageApi: string = `##[Error]OpenApi ExecuteScan http status code error: ${err.statusCode}. Please verify that the url entered is accessible from ZAP`;
-                            console.log(messageApi);
-                            console.log('Gave error but continues by parameter: ContinueOnError');
-                            scanResult.Message = 'Gave error but continues by parameter: ContinueOnError';
-                            scanResult.Success = true;
-                            return scanResult;
-                        }
+            RequestPromise(this.requestOptions)
+                .then(async (res: any) => {
+                    if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
+                        scanResult.Success = true;
+                    } else {
+                        const result: ZapScanResult = JSON.parse(res);
                         if (process.env.NODE_ENV === 'dev') {
-                            console.log('Err ExecuteScan', err);
-                            scanResult.Message = `Err ExecuteScan: ${err}`;
-                        } else {
-                            scanResult.Message = err.message || err;
+                            console.log(`ExecuteScan res: ${res}`);
                         }
-                        scanResult.Success = false;
-                        reject(scanResult);
-                    });
-            } catch (err) {
-                scanResult.Success = false;
-                if (process.env.NODE_ENV === 'dev') {
-                    console.log(`Error ExecuteScan Request: ${err}`);
-                    scanResult.Message = `Error ExecuteScan Request: ${err}`;
-                } else {
-                    scanResult.Message = err.message || err;
-                }
-                reject(scanResult);
-            }
+                        if (this.scanType === Constants.AJAX_SPIDER_SCAN_NAME) {
+                            console.log(`Owasp Zap ${this.scanType} Initiated. Result: ${result.result}`);
+                        } else {
+                            console.log(`Owasp Zap ${this.scanType} Initiated. ID: ${result.scan}`);
+                        }
+                        scanResult.Success = await this.CheckScanStatus(result.scan, this.zapScanType);
+                        if (!scanResult.Success) {
+                            scanResult.Message = `${this.scanType} status check failed.`;
+                            reject(scanResult);
+                        }
+                    }
+                    resolve(scanResult);
+                })
+                .catch((err: any) => {
+                    if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
+                        const messageApi: string = `##[Error]OpenApi ExecuteScan http status code error: ${err.statusCode}. Please verify that the url entered is accessible from ZAP`;
+                        console.log(messageApi);
+                        console.log('Gave error but continues by parameter: ContinueOnError');
+                        scanResult.Message = 'Gave error but continues by parameter: ContinueOnError';
+                        scanResult.Success = true;
+                        resolve(scanResult);
+                    }
+                    if (process.env.NODE_ENV === 'dev') {
+                        console.log('Err ExecuteScan', err);
+                        scanResult.Message = `Err ExecuteScan: ${err}`;
+                    } else {
+                        scanResult.Message = err.message || err;
+                    }
+                    scanResult.Success = false;
+                    reject(scanResult);
+                });
         }).catch((err: any) => {
             if (process.env.NODE_ENV === 'dev') {
                 console.log(`ExecuteScan Error: ${err}`);
