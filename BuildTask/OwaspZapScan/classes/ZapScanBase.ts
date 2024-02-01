@@ -55,10 +55,10 @@ export abstract class ZapScanBase implements IZapScan {
                         if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
                             const messageApi: string = `##[Error]OpenApi ExecuteScan http status code error: ${err.statusCode}. Please verify that the url entered is accessible from ZAP`;
                             console.log(messageApi);
-
+                            console.log('Gave error but continues by parameter: ContinueOnError');
                             scanResult.Message = 'Gave error but continues by parameter: ContinueOnError';
                             scanResult.Success = true;
-                            resolve(scanResult);
+                            return scanResult;
                         }
                         if (process.env.NODE_ENV === 'dev') {
                             console.log('Err ExecuteScan', err);
