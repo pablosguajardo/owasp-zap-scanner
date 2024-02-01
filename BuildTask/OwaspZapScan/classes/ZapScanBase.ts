@@ -14,6 +14,7 @@ import { Constants } from './Constants';
 export abstract class ZapScanBase implements IZapScan {
     zapScanType: ZapScanType;
     scanType: string;
+    continueOnUrlError?: string;
     requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions;
     protected taskInputs: TaskInput;
 
@@ -54,10 +55,12 @@ export abstract class ZapScanBase implements IZapScan {
                     if (this.scanType === Constants.OPENAPI_FILE_SCAN_NAME || this.scanType === Constants.OPENAPI_URL_SCAN_NAME) {
                         const messageApi: string = `##[Error]OpenApi ExecuteScan http status code error: ${err.statusCode}. Please verify that the url entered is accessible from ZAP`;
                         console.log(messageApi);
-                        console.log('warning: Gave error but continues by parameter: ContinueOnError');
-                        scanResult.Message = 'Gave error but continues by parameter: ContinueOnError';
-                        scanResult.Success = true;
-                        resolve(scanResult);
+                        if (this.continueOnUrlError === 'Yes') {
+                            console.log('##[warning]: Give error but continues by parameter: ContinueOnUrlError');
+                            scanResult.Message = 'Give error but continues by parameter: ContinueOnUrlError';
+                            scanResult.Success = true;
+                            resolve(scanResult);
+                        }
                     } else {
                         if (process.env.NODE_ENV === 'dev') {
                             console.log('Err ExecuteScan', err);

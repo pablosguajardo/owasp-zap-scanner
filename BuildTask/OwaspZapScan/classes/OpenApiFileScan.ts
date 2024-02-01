@@ -14,13 +14,14 @@ export class OpenApiFileScan extends ZapScanBase {
 
         /* Set Scan Type for Logging */
         this.scanType = Constants.OPENAPI_FILE_SCAN_NAME;
-      
+        this.continueOnUrlError = this.taskInputs.ContinueOnUrlError;
         /* Open Api Scan Options */
         this._scanOptions = {
             apikey: this.taskInputs.ZapApiKey,
             file: this.taskInputs.OpenApiFile,
             target: this.taskInputs.OpenApiHostOverride,
             contextId: this.taskInputs.OpenApiContextId,
+            continueOnUrlError: this.taskInputs.ContinueOnUrlError,
             formMethod: 'GET',
             zapapiformat: 'JSON'
         };

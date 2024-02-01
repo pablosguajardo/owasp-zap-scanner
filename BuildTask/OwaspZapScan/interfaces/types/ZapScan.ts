@@ -27,12 +27,14 @@ export interface ZapOpenApiUrlScanOptions extends ZapScanOptionsBase {
     url: string;
     hostOverride?: string;
     contextId?: string;
+    continueOnUrlError: string;
 }
 
 export interface ZapOpenApiFileScanOptions extends ZapScanOptionsBase {
     file: string;
     target?: string;
     contextId?: string;
+    continueOnUrlError: string;
 }
 
 export interface ZapAjaxSpiderScanOptions extends ZapScanOptionsBase {
