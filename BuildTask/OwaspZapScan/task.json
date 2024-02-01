@@ -241,6 +241,7 @@
           "type": "pickList",
           "label": "Continue on url error",
           "required": false,
+          "groupName": "openApiScanOptions",
           "defaultValue": "No",
           "options": {
             "Yes": "Yes",
