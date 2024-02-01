@@ -131,12 +131,23 @@ export class TaskInput {
     set OpenApiContextId(value: string) {
         this._openApiContextId = value;
     }
-
     get OpenApiContextId(): string {
         if (this._openApiContextId) {
             return this._openApiContextId;
         }
         return '';
+    }
+
+    
+    private _continueOnUrlError: string;
+    set ContinueOnUrlError(value: string) {
+        this._continueOnUrlError = value;
+    }
+    get ContinueOnUrlError(): string {
+        if (this._continueOnUrlError) {
+            return this._continueOnUrlError;
+        }
+        return 'No';
     }
     /* End Open Api Scan */
 

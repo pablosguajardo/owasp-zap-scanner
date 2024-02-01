@@ -40,6 +40,7 @@ async function run(): Promise<string> {
             taskInputs.OpenApiUrl = Task.getInput('OpenApiUrl');
             taskInputs.OpenApiHostOverride = Task.getInput('OpenApiHostOverride');
             taskInputs.OpenApiContextId = Task.getInput('OpenApiContextId');
+            taskInputs.ContinueOnUrlError = Task.getInput('ContinueOnUrlError');
 
             /* Ajax Spider Scan Options */
             taskInputs.ExecuteAjaxSpiderScan = Task.getBoolInput('ExecuteAjaxSpiderScan');

@@ -237,6 +237,19 @@
             "visibleRule": "ExecuteOpenApiScan = true"
         },
         {
+          "name": "ContinueOnUrlError",
+          "type": "pickList",
+          "label": "Continue on url error",
+          "required": false,
+          "defaultValue": "No",
+          "options": {
+            "Yes": "Yes",
+            "No": "No"
+          },
+          "helpMarkDown": "If the provided url is not accessible from ZAP, an error will occur. If this option is activated, the rest of the scans will follow.",
+          "visibleRule": "ExecuteOpenApiScan = true"
+        },
+        {
             "name": "ExecuteActiveScan",
             "type": "boolean",
             "label": "Execute Active Scan",
