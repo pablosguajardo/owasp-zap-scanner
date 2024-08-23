@@ -1,8 +1,8 @@
 {
     "id": "41f040e5-e040-1336-878a-59a493312348",
     "name": "OwaspZapScan",
-    "friendlyName": "Owasp Zap Scan",
-    "description": "Owasp Zap Scan #{Version}",
+    "friendlyName": "Owasp Zap Scan v#{Version}",
+    "description": "Owasp Zap Scan v#{Version}",
     "helpMarkDown": "[Help for Owasp Zap Scan v#{Version}](https://marketplace.visualstudio.com/items?itemName=solucionespsg.owasp-zap-scan-psg) [More Information](https://github.com/pablosguajardo/owasp-zap-scanner) Versioned with [Update Version Variables And Package](https://marketplace.visualstudio.com/items?itemName=solucionespsg.UpdateVersionVariablesAndPackage) Published with [Generate and publish vsix to Marketplace](https://marketplace.visualstudio.com/items?itemName=solucionespsg.GenerateAndPublishVsixToMarketplace) Complemented with [Owasp Zap OnPremise Start/Stop](https://marketplace.visualstudio.com/items?itemName=solucionespsg.OwaspZapOnPremiseStartStop)",
     "category": "Utility",
     "visibility": [
