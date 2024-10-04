@@ -100,9 +100,13 @@ async function run(): Promise<string> {
             const selectedScans: Array<IZapScan> = new Array<IZapScan>();
             let scanStatus: ScanResult = { Success: false };
             let hasIssues: boolean = false;
+            //In case nothing is selected and you just want to start the proxy:
+            let nothingIsSelected: boolean = true;
+
 
             /* Add Open Api Scan is selected */
             if (taskInputs.ExecuteOpenApiScan) {
+                nothingIsSelected = false;
                 await helper.ValidateInputsOpenApi(taskInputs.OpenApiUrl, taskInputs.OpenApiFile);
                 if (taskInputs.OpenApiUrl !== '') {
                     console.log('OpenAPI Scan from Url is selected.');
@@ -115,24 +119,31 @@ async function run(): Promise<string> {
 
                 }
             }
+
             /* Add Spider Scan is selected */
             if (taskInputs.ExecuteSpiderScan) {
+                nothingIsSelected = false;
                 console.log('Spider scan is selected.');
                 const spiderScan: SpiderScan = new SpiderScan(taskInputs);
                 selectedScans.push(spiderScan);
             }
+
             /* Add Ajax Spider Scan is selected */
             if (taskInputs.ExecuteAjaxSpiderScan) {
+                nothingIsSelected = false;
                 console.log('Ajax spider scan is selected.');
                 const spiderAjaxScan: AjaxSpiderScan = new AjaxSpiderScan(taskInputs);
                 selectedScans.push(spiderAjaxScan);
             }
+
             /* Add the Active Scan */
             if (taskInputs.ExecuteActiveScan) {
+                nothingIsSelected = false;
                 console.log('Active scan is selected.');
                 const activeScan: ActiveScan = new ActiveScan(taskInputs);
                 selectedScans.push(activeScan);
             }
+
             /* Execute the Scans */
             for (let i: number = 0; i < selectedScans.length; i++) {
                 const scan: IZapScan = selectedScans[i];
@@ -156,6 +167,11 @@ async function run(): Promise<string> {
                 verify.Assert();
 
                 resolve(`Owasp Zap Active Scan ${hasIssues ? 'Partially' : ''} Completed. Result is within the expected thresholds.`);
+            } else if (nothingIsSelected) {
+                if (process.env.NODE_ENV === 'dev') {
+                    console.log('Nothing is selected');
+                }
+                resolve('The service has started successfully. No scanner has been selected.');
             } else {
                 reject('A scan failed to complete.');
             }
