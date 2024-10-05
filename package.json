@@ -58,7 +58,7 @@
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "thread-sleep": "^2.0.0",
-    "vsts-task-lib": "^2.1.0",
+    "vsts-task-lib": "^2.7.0",
     "xmljson": "^0.2.0"
   },
   "devDependencies": {
