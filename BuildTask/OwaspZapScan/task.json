@@ -26,6 +26,11 @@
             "name": "apiConfiguration",
             "displayName": "ZAP Configuration",
             "isExpanded": true
+        }, 
+        {
+            "name": "contextConfiguration",
+            "displayName": "Context Configuration",
+            "isExpanded": false
         },
         {
             "name": "ajaxSpiderScanOptions",
@@ -112,6 +117,54 @@
             "groupName": "apiConfiguration",
             "helpMarkDown": "The name of the new context.",
             "visibleRule": "NewContext = true"
+        },
+        {
+            "name": "ContextNameConfig",
+            "type": "string",
+            "label": "Context Name",
+            "required": false,
+            "groupName": "contextConfiguration",
+            "helpMarkDown": "The name for any defined context. If the value does not match a defined context then an error will occur."
+        },
+        {
+            "name": "IncludeInContextConfig",
+            "type": "string",
+            "label": "Include in context",
+            "required": false,
+            "groupName": "contextConfiguration",
+            "helpMarkDown": "Regular expression to include in the context. For example 'https://mysite.com.*'. For more than one add values ​​separated by commas (',')."
+        },
+        {
+            "name": "ExcludeFromContextConfig",
+            "type": "string",
+            "label": "Exclude from context",
+            "required": false,
+            "groupName": "contextConfiguration",
+            "helpMarkDown": "Regular expression to exclude from the context. For example 'https://mysite.com/Logout.*'. For more than one add values ​​separated by commas (',')."
+        },
+        {
+            "name": "ShowContextListConfig",
+            "type": "boolean",
+            "label": "Show context list",
+            "required": false,
+            "groupName": "contextConfiguration",
+            "helpMarkDown": "Enable to view contexts list in the Azure DevOps console."
+        },
+        {
+            "name": "IncludeAllContextTechnologiesConfig",
+            "type": "boolean",
+            "label": "Include all context technologies",
+            "required": false,
+            "groupName": "contextConfiguration",
+            "helpMarkDown": "Include all technologies in context."
+        },
+        {
+            "name": "ShowTechnologyListConfig",
+            "type": "boolean",
+            "label": "Show context technologies",
+            "required": false,
+            "groupName": "contextConfiguration",
+            "helpMarkDown": "Enable to display the list of context technologies in the Azure DevOps console."
         },
         {
             "name": "ExecuteAjaxSpiderScan",

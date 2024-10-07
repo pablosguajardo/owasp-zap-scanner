@@ -77,6 +77,73 @@ export class TaskInput {
         return '';
     }
 
+    /* Context config */
+
+    private _showTechnologyListConfig: string;
+    set ShowTechnologyListConfig(value: string) {
+        this._showTechnologyListConfig = value;
+    }
+    get ShowTechnologyListConfig(): string {
+        if (this._showTechnologyListConfig) {
+            return this._showTechnologyListConfig;
+        }
+        return '';
+    }
+
+    private _includeAllContextTechnologiesConfig: string;
+    set IncludeAllContextTechnologiesConfig(value: string) {
+        this._includeAllContextTechnologiesConfig = value;
+    }
+    get IncludeAllContextTechnologiesConfig(): string {
+        if (this._includeAllContextTechnologiesConfig) {
+            return this._includeAllContextTechnologiesConfig;
+        }
+        return '';
+    }
+
+    private _showContextListConfig: string;
+    set ShowContextListConfig(value: string) {
+        this._showContextListConfig = value;
+    }
+    get ShowContextListConfig(): string {
+        if (this._showContextListConfig) {
+            return this._showContextListConfig;
+        }
+        return '';
+    }
+
+    private _excludeFromContextConfig: string;
+    set ExcludeFromContextConfig(value: string) {
+        this._excludeFromContextConfig = value;
+    }
+    get ExcludeFromContextConfig(): string {
+        if (this._excludeFromContextConfig) {
+            return this._excludeFromContextConfig;
+        }
+        return '';
+    }
+
+    private _includeInContextConfig: string;
+    set IncludeInContextConfig(value: string) {
+        this._includeInContextConfig = value;
+    }
+    get IncludeInContextConfig(): string {
+        if (this._includeInContextConfig) {
+            return this._includeInContextConfig;
+        }
+        return '';
+    }
+
+    private _contextNameConfig: string;
+    set ContextNameConfig(value: string) {
+        this._contextNameConfig = value;
+    }
+    get ContextNameConfig(): string {
+        if (this._contextNameConfig) {
+            return this._contextNameConfig;
+        }
+        return '';
+    }
 
     /* Open Api Scan */
     private _executeOpenApiScan: boolean;
@@ -138,7 +205,7 @@ export class TaskInput {
         return '';
     }
 
-    
+
     private _continueOnUrlError: string;
     set ContinueOnUrlError(value: string) {
         this._continueOnUrlError = value;
