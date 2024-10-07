@@ -79,37 +79,37 @@ export class TaskInput {
 
     /* Context config */
 
-    private _showTechnologyListConfig: string;
-    set ShowTechnologyListConfig(value: string) {
+    private _showTechnologyListConfig: boolean;
+    set ShowTechnologyListConfig(value: boolean) {
         this._showTechnologyListConfig = value;
     }
-    get ShowTechnologyListConfig(): string {
+    get ShowTechnologyListConfig(): boolean {
         if (this._showTechnologyListConfig) {
             return this._showTechnologyListConfig;
         }
-        return '';
+        return false;
     }
 
-    private _includeAllContextTechnologiesConfig: string;
-    set IncludeAllContextTechnologiesConfig(value: string) {
+    private _includeAllContextTechnologiesConfig: boolean;
+    set IncludeAllContextTechnologiesConfig(value: boolean) {
         this._includeAllContextTechnologiesConfig = value;
     }
-    get IncludeAllContextTechnologiesConfig(): string {
+    get IncludeAllContextTechnologiesConfig(): boolean {
         if (this._includeAllContextTechnologiesConfig) {
             return this._includeAllContextTechnologiesConfig;
         }
-        return '';
+        return false;
     }
 
-    private _showContextListConfig: string;
-    set ShowContextListConfig(value: string) {
+    private _showContextListConfig: boolean;
+    set ShowContextListConfig(value: boolean) {
         this._showContextListConfig = value;
     }
-    get ShowContextListConfig(): string {
+    get ShowContextListConfig(): boolean {
         if (this._showContextListConfig) {
             return this._showContextListConfig;
         }
-        return '';
+        return false;
     }
 
     private _excludeFromContextConfig: string;
