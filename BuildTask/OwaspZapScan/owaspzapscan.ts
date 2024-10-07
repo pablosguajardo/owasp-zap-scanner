@@ -34,6 +34,16 @@ async function run(): Promise<string> {
             taskInputs.NewContext = Task.getBoolInput('NewContext');
             taskInputs.NewContextName = Task.getInput('NewContextName');
 
+            /* Context Config */
+
+            taskInputs.ContextNameConfig = Task.getInput('ContextNameConfig');
+            taskInputs.IncludeInContextConfig = Task.getInput('IncludeInContextConfig');
+            taskInputs.ExcludeFromContextConfig = Task.getInput('ExcludeFromContextConfig');
+            taskInputs.ShowContextListConfig = Task.getInput('ShowContextListConfig');
+            taskInputs.IncludeAllContextTechnologiesConfig = Task.getInput('IncludeAllContextTechnologiesConfig');
+            taskInputs.ShowTechnologyListConfig = Task.getInput('ShowTechnologyListConfig');
+
+
             /* Open Api Scan Options */
             taskInputs.ExecuteOpenApiScan = Task.getBoolInput('ExecuteOpenApiScan');
             taskInputs.OpenApiFile = Task.getInput('OpenApiFile');
@@ -91,6 +101,22 @@ async function run(): Promise<string> {
             if (taskInputs.NewContext) {
                 const idNewContext = await apiHelper.CreateNewContext(taskInputs.NewContextName);
             }
+
+            //contect config:
+            if (taskInputs.ContextNameConfig  && taskInputs.ContextNameConfig !== 'undefined') {
+                await apiHelper.IncludeInContextConfig();
+                await apiHelper.ExcludeFromContextConfig();
+                await apiHelper.IncludeAllContextTechnologiesConfig();
+            }
+
+            if (taskInputs.ShowContextListConfig) {
+                await apiHelper.ShowContextListConfig();
+            }
+
+            if (taskInputs.ShowTechnologyListConfig) {
+                await apiHelper.ShowTechnologyListConfig();
+            }
+            
 
             if (process.env.NODE_ENV === 'dev') {
                 console.log(`OpenApiUrl: ${taskInputs.OpenApiUrl} OpenApiFile: ${taskInputs.OpenApiFile}`);
