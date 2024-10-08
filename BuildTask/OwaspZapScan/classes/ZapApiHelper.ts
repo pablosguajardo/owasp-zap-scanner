@@ -102,7 +102,7 @@ export class ZapApiHelper {
                 });
         });
     }
-    
+
     //JSON/context/view/technologyList/?apikey=$apikey
     ShowTechnologyListConfig(): Promise<number> {
         const statusOptions = {
@@ -133,75 +133,64 @@ export class ZapApiHelper {
                 });
         });
     }
-    ExcludeFromContextConfig(): Promise<number> {
+    
+    ExcludeFromContextConfig(itemRegex: string): Promise<number> {
+        const statusOptions = {
+            zapapiformat: 'JSON',
+            apikey: this.taskInputs.ZapApiKey,
+            contextName: this.taskInputs.ContextNameConfig,
+            regex: itemRegex,
+            formMethod: 'GET'
+        };
+
+        const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
+            uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/excludeFromContext/`,
+            qs: statusOptions
+        };
+
+        console.log(`Exclude regex: ${itemRegex} from context: ${this.taskInputs.ContextNameConfig}`);
+        Task.debug(`ZAP API Call: ${requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
         return new Promise<number>((resolve, reject) => {
-            const arrRegex = this.taskInputs.ExcludeFromContextConfig.split(',');
-            let resNumberStatus: number = 0;
-            arrRegex.forEach(itemRegex => {
-                console.log(`Exclude regex: ${itemRegex} from context: ${this.taskInputs.ContextNameConfig}`);
-                const statusOptions = {
-                    zapapiformat: 'JSON',
-                    apikey: this.taskInputs.ZapApiKey,
-                    contextName: this.taskInputs.ContextNameConfig,
-                    regex: itemRegex,
-                    formMethod: 'GET'
-                };
-
-                const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
-                    uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/excludeFromContext/`,
-                    qs: statusOptions
-                };
-
-                Task.debug(`ZAP API Call: ${requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
-
-                RequestPromise(requestOptions)
-                    .then((res: any) => {
-                        const result = JSON.parse(res);
-                        console.log('Successfully exclude regex from context.');
-                        Task.debug(`Status Result: ${JSON.stringify(res)}`);
-                        resNumberStatus = result.status;
-                    })
-                    .catch((err: any) => {
-                        reject(err.message || err);
-                    });
-            });
-            resolve(resNumberStatus);
+            RequestPromise(requestOptions)
+                .then((res: any) => {
+                    const result = JSON.parse(res);
+                    console.log('Successfully exclude regex from context.');
+                    Task.debug(`Status Result: ${JSON.stringify(res)}`);
+                    resolve(result.status);
+                })
+                .catch((err: any) => {
+                    reject(err.message || err);
+                });
         });
     }
+   
+    IncludeInContextConfig(itemRegex: string): Promise<number> {
+        const statusOptions = {
+            zapapiformat: 'JSON',
+            apikey: this.taskInputs.ZapApiKey,
+            contextName: this.taskInputs.ContextNameConfig,
+            regex: itemRegex,
+            formMethod: 'GET'
+        };
 
-    IncludeInContextConfig(): Promise<number> {
+        const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
+            uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/includeInContext/`,
+            qs: statusOptions
+        };
+
+        console.log(`Add regex: ${itemRegex} in context: ${this.taskInputs.ContextNameConfig}`);
+        Task.debug(`ZAP API Call: ${requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
         return new Promise<number>((resolve, reject) => {
-            const arrRegex = this.taskInputs.IncludeInContextConfig.split(',');
-            let resNumberStatus: number = 0;
-            arrRegex.forEach(itemRegex => {
-                console.log(`Add regex: ${itemRegex} in context: ${this.taskInputs.ContextNameConfig}`);
-                const statusOptions = {
-                    zapapiformat: 'JSON',
-                    apikey: this.taskInputs.ZapApiKey,
-                    contextName: this.taskInputs.ContextNameConfig,
-                    regex: itemRegex,
-                    formMethod: 'GET'
-                };
-
-                const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
-                    uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/includeInContext/`,
-                    qs: statusOptions
-                };
-
-                Task.debug(`ZAP API Call: ${requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
-
-                RequestPromise(requestOptions)
-                    .then((res: any) => {
-                        const result = JSON.parse(res);
-                        console.log('Successfully added regex to context.');
-                        Task.debug(`Status Result: ${JSON.stringify(res)}`);
-                        resNumberStatus = result.status;
-                    })
-                    .catch((err: any) => {
-                        reject(err.message || err);
-                    });
-            });
-            resolve(resNumberStatus);
+            RequestPromise(requestOptions)
+                .then((res: any) => {
+                    const result = JSON.parse(res);
+                    console.log('Successfully added regex to context.');
+                    Task.debug(`Status Result: ${JSON.stringify(res)}`);
+                    resolve(result.status);
+                })
+                .catch((err: any) => {
+                    reject(err.message || err);
+                });
         });
     }
 

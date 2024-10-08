@@ -104,9 +104,18 @@ async function run(): Promise<string> {
 
             //contect config:
             if (taskInputs.ContextNameConfig && taskInputs.ContextNameConfig !== 'undefined') {
-                await apiHelper.IncludeInContextConfig();
-                await apiHelper.ExcludeFromContextConfig();
-
+                if (taskInputs.IncludeInContextConfig && taskInputs.IncludeInContextConfig !== 'undefined') {
+                    const arrRegex = taskInputs.IncludeInContextConfig.split(',');
+                    for (const itemRegex of arrRegex) {
+                        await apiHelper.IncludeInContextConfig(itemRegex);
+                    }
+                }
+                if (taskInputs.ExcludeFromContextConfig && taskInputs.ExcludeFromContextConfig !== 'undefined') {
+                    const arrRegex = taskInputs.ExcludeFromContextConfig.split(',');
+                    for (const itemRegex of arrRegex) {
+                        await apiHelper.ExcludeFromContextConfig(itemRegex);
+                    }
+                }
                 if (taskInputs.IncludeAllContextTechnologiesConfig === true) {
                     await apiHelper.IncludeAllContextTechnologiesConfig();
                 }
