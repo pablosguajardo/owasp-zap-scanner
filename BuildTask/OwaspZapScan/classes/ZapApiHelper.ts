@@ -64,7 +64,7 @@ export class ZapApiHelper {
                     console.log('Successfully get list:');
                     const result = JSON.parse(res);
 
-                    console.log(`${JSON.stringify(result.Content)}`);
+                    console.log(`${JSON.stringify(result.contextList)}`);
                     Task.debug(`Status Result: ${JSON.stringify(res)}`);
                     resolve(result.status);
                 })
@@ -133,7 +133,7 @@ export class ZapApiHelper {
                     console.log('Successfully get list:');
                     const result = JSON.parse(res);
 
-                    console.log(`${res.Content}`);
+                    console.log(`${result.technologyList}`);
                     Task.debug(`Status Result: ${JSON.stringify(res)}`);
                     resolve(result.status);
                 })
