@@ -69,7 +69,7 @@ export class ZapApiHelper {
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err contextList: ${err.message || err}`);
                 });
         });
     }
@@ -104,7 +104,7 @@ export class ZapApiHelper {
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err incTech: ${err.message || err}`);
                 });
         });
     }
@@ -138,7 +138,7 @@ export class ZapApiHelper {
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err techList: ${err.message || err}`);
                 });
         });
     }
@@ -171,7 +171,7 @@ export class ZapApiHelper {
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err excCont: ${err.message || err}`);
                 });
         });
     }
@@ -204,7 +204,7 @@ export class ZapApiHelper {
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err incCont: ${err.message || err}`);
                 });
         });
     }
