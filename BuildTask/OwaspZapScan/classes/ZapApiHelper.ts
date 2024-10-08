@@ -58,15 +58,18 @@ export class ZapApiHelper {
         return new Promise<number>((resolve, reject) => {
             RequestPromise(requestOptions)
                 .then((res: any) => {
+                    if (process.env.NODE_ENV === 'dev') {
+                        console.log(`Result: ${JSON.stringify(res)}`);
+                    }
+                    console.log('Successfully get list:');
                     const result = JSON.parse(res);
 
-                    console.log('Successfully get list:');
-                    console.log(`${JSON.stringify(res.Content)}`);
+                    console.log(`${JSON.stringify(result.Content)}`);
                     Task.debug(`Status Result: ${JSON.stringify(res)}`);
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err contextList: ${err.message || err}`);
                 });
         });
     }
@@ -91,6 +94,9 @@ export class ZapApiHelper {
         return new Promise<number>((resolve, reject) => {
             RequestPromise(requestOptions)
                 .then((res: any) => {
+                    if (process.env.NODE_ENV === 'dev') {
+                        console.log(`Result: ${JSON.stringify(res)}`);
+                    }
                     const result = JSON.parse(res);
 
                     console.log('Successfully Include all context technologies');
@@ -98,7 +104,7 @@ export class ZapApiHelper {
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err incTech: ${err.message || err}`);
                 });
         });
     }
@@ -121,19 +127,22 @@ export class ZapApiHelper {
         return new Promise<number>((resolve, reject) => {
             RequestPromise(requestOptions)
                 .then((res: any) => {
+                    if (process.env.NODE_ENV === 'dev') {
+                        console.log(`Result: ${JSON.stringify(res)}`);
+                    }
+                    console.log('Successfully get list:');
                     const result = JSON.parse(res);
 
-                    console.log('Successfully get list:');
-                    console.log(`${JSON.stringify(res.Content)}`);
+                    console.log(`${res.Content}`);
                     Task.debug(`Status Result: ${JSON.stringify(res)}`);
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err techList: ${err.message || err}`);
                 });
         });
     }
-    
+
     ExcludeFromContextConfig(itemRegex: string): Promise<number> {
         const statusOptions = {
             zapapiformat: 'JSON',
@@ -153,17 +162,20 @@ export class ZapApiHelper {
         return new Promise<number>((resolve, reject) => {
             RequestPromise(requestOptions)
                 .then((res: any) => {
+                    if (process.env.NODE_ENV === 'dev') {
+                        console.log(`Result: ${JSON.stringify(res)}`);
+                    }
                     const result = JSON.parse(res);
                     console.log('Successfully exclude regex from context.');
                     Task.debug(`Status Result: ${JSON.stringify(res)}`);
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err excCont: ${err.message || err}`);
                 });
         });
     }
-   
+
     IncludeInContextConfig(itemRegex: string): Promise<number> {
         const statusOptions = {
             zapapiformat: 'JSON',
@@ -183,13 +195,16 @@ export class ZapApiHelper {
         return new Promise<number>((resolve, reject) => {
             RequestPromise(requestOptions)
                 .then((res: any) => {
+                    if (process.env.NODE_ENV === 'dev') {
+                        console.log(`Result: ${JSON.stringify(res)}`);
+                    }
                     const result = JSON.parse(res);
                     console.log('Successfully added regex to context.');
                     Task.debug(`Status Result: ${JSON.stringify(res)}`);
                     resolve(result.status);
                 })
                 .catch((err: any) => {
-                    reject(err.message || err);
+                    reject(`Err incCont: ${err.message || err}`);
                 });
         });
     }
