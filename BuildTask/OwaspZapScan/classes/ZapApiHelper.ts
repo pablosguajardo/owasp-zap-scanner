@@ -49,7 +49,7 @@ export class ZapApiHelper {
         };
 
         const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
-            uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/contextList/`,
+            uri: `${this.taskInputs.ZapApiUrl}/JSON/context/view/contextList/`,
             qs: statusOptions
         };
 
@@ -85,7 +85,7 @@ export class ZapApiHelper {
 
         const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
             // tslint:disable-next-line:no-http-string
-            uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/includeAllContextTechnologies/`,
+            uri: `${this.taskInputs.ZapApiUrl}/JSON/context/action/includeAllContextTechnologies/`,
             qs: statusOptions
         };
 
@@ -118,7 +118,7 @@ export class ZapApiHelper {
         };
 
         const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
-            uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/technologyList/`,
+            uri: `${this.taskInputs.ZapApiUrl}/JSON/context/view/technologyList/`,
             qs: statusOptions
         };
 
@@ -153,7 +153,7 @@ export class ZapApiHelper {
         };
 
         const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
-            uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/excludeFromContext/`,
+            uri: `${this.taskInputs.ZapApiUrl}/JSON/context/action/excludeFromContext/`,
             qs: statusOptions
         };
 
@@ -186,7 +186,7 @@ export class ZapApiHelper {
         };
 
         const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
-            uri: `${this.taskInputs.ZapApiUrl}/JSON/core/action/includeInContext/`,
+            uri: `${this.taskInputs.ZapApiUrl}/JSON/context/action/includeInContext/`,
             qs: statusOptions
         };
 
