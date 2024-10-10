@@ -145,6 +145,18 @@ export class TaskInput {
         return '';
     }
 
+    
+    private _contextNameRemoveConfig: string;
+    set ContextNameRemoveConfig(value: string) {
+        this._contextNameRemoveConfig = value;
+    }
+    get ContextNameRemoveConfig(): string {
+        if (this._contextNameRemoveConfig) {
+            return this._contextNameRemoveConfig;
+        }
+        return '';
+    }
+    
     /* Open Api Scan */
     private _executeOpenApiScan: boolean;
     set ExecuteOpenApiScan(value: boolean) {

@@ -42,6 +42,9 @@ async function run(): Promise<string> {
             taskInputs.ShowContextListConfig = Task.getBoolInput('ShowContextListConfig');
             taskInputs.IncludeAllContextTechnologiesConfig = Task.getBoolInput('IncludeAllContextTechnologiesConfig');
             taskInputs.ShowTechnologyListConfig = Task.getBoolInput('ShowTechnologyListConfig');
+            taskInputs.ContextNameRemoveConfig = Task.getInput('ContextNameRemoveConfig');
+
+
 
 
             /* Open Api Scan Options */
@@ -97,6 +100,11 @@ async function run(): Promise<string> {
                 await apiHelper.ClearZapSession();
             }
 
+            //contect config:
+            if (taskInputs.ContextNameRemoveConfig && taskInputs.ContextNameRemoveConfig !== 'undefined') {
+                const idRemovedContext = await apiHelper.RemoveContext(taskInputs.ContextNameRemoveConfig);
+            }
+            
             //new context
             if (taskInputs.NewContext) {
                 const idNewContext = await apiHelper.CreateNewContext(taskInputs.NewContextName);
