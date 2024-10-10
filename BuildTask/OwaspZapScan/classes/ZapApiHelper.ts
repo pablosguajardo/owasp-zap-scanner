@@ -248,4 +248,44 @@ export class ZapApiHelper {
                 });
         });
     }
+
+    RemoveContext(nameContext: string): Promise<number> {
+        const statusOptions = {
+            zapapiformat: 'JSON',
+            apikey: this.taskInputs.ZapApiKey,
+            formMethod: 'GET',
+            contextName: nameContext
+        };
+
+        const requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions = {
+            // tslint:disable-next-line:no-http-string
+            uri: `${this.taskInputs.ZapApiUrl}/JSON/context/action/removeContext/`,
+            qs: statusOptions
+        };
+        //Example: /JSON/context/action/removeContext/?apikey=1234&contextName=micontexto
+        console.log('Remove context...');
+        Task.debug(`ZAP API Call: ${requestOptions.uri} | Request Options: ${JSON.stringify(statusOptions)}`);
+        return new Promise<number>((resolve, reject) => {
+            RequestPromise(requestOptions)
+                .then((res: any) => {
+                    const result = JSON.parse(res);
+                    //ej: existe: {"code":"already_exists","message":"Ya Existe"}
+                    //ej: ok: {"contextId":"2"}
+                    Task.debug(`Status Result: ${JSON.stringify(res)}`);
+                    if (result.Result !== undefined && result.Result === 'OK') {
+                        console.log(`Successfully: The Zap context ${nameContext} was removed.`);
+                        resolve(result.contextId);
+                    } else if (result.message !== undefined) {
+                        const message: string = `ERROR removing the context ${nameContext}: ${result.message}`;
+                        reject(message);
+                    } else {
+                        const message: string = `Context ${nameContext} could not be removed.`;
+                        reject(message);
+                    }
+                })
+                .catch((err: any) => {
+                    reject(err.message || err);
+                });
+        });
+    }
 }

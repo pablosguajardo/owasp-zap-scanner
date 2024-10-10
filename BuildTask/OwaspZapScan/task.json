@@ -127,6 +127,14 @@
             "helpMarkDown": "The name for any defined context. If the value does not match a defined context then an error will occur."
         },
         {
+            "name": "ContextNameRemoveConfig",
+            "type": "string",
+            "label": "Context Name to remove",
+            "required": false,
+            "groupName": "contextConfiguration",
+            "helpMarkDown": "The name for any context defined to be removed from the current session. If the value does not match a defined context then an error will occur."
+        },
+        {
             "name": "IncludeInContextConfig",
             "type": "string",
             "label": "Include in context",
