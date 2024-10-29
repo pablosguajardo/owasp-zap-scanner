@@ -10,6 +10,7 @@ export class Constants {
     static XML: string = 'xml';
     static MARKDOWN: string = 'md';
     static ALL: string = 'all';
+    static HTMLORIG: string = 'Orig.html';
 
     /* Risk Code */
     static HIGH_RISK: string = '3';

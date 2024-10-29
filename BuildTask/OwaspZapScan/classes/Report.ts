@@ -17,6 +17,7 @@ import { RequestService } from './RequestService';
 export class Report {
     private _reportOptions: ZapScanReportOptions;
     private _requestOptions: Request.UriOptions & RequestPromise.RequestPromiseOptions;
+    private _requestOptionsAux: Request.UriOptions & RequestPromise.RequestPromiseOptions;
 
     private _helper: Helper;
     private _requestService: RequestService;
@@ -49,16 +50,21 @@ export class Report {
         if (type === ReportType.HTML) { reportType = Constants.HTML_REPORT; }
         if (type === ReportType.MD) { reportType = Constants.MD_REPORT; }
         if (type === ReportType.ALL) { reportType = Constants.ALL_REPORT; }
+        if (type === ReportType.HTMLORIG) { reportType = Constants.HTML_REPORT; }
 
-        this._requestOptions.uri = `${this._requestOptions.uri}/${reportType}/`;
-
+        //this._requestOptions.uri = `${this._requestOptions.uri}/${reportType}/`;
+        this._requestOptionsAux = {
+            // tslint:disable-next-line:no-http-string
+            uri: `${this._requestOptions.uri}/${reportType}/`,
+            qs: this._reportOptions
+        };
         /* istanbul ignore if */
         if (process.env.NODE_ENV === 'dev') {
-            Task.debug(`Active Scan Results | ZAP API Call: ${this._requestOptions.uri} | Request Options: ${JSON.stringify(this._requestOptions)}`);
-            console.log(`Active Scan Results | ZAP API Call: ${this._requestOptions.uri} | Request Options: ${JSON.stringify(this._requestOptions)}`);
+            Task.debug(`Active Scan Results | ZAP API Call: ${this._requestOptionsAux.uri} | Request Options: ${JSON.stringify(this._requestOptions)}`);
+            console.log(`Active Scan Results | ZAP API Call: ${this._requestOptionsAux.uri} | Request Options: ${JSON.stringify(this._requestOptions)}`);
         }
 
-        return this._requestService.ExecuteScanResultQuery(this._requestOptions);
+        return this._requestService.ExecuteScanResultQuery(this._requestOptionsAux);
     }
     async GenerateReport(): Promise<boolean> {
         let type: ReportType;
@@ -69,6 +75,8 @@ export class Report {
             type = ReportType.MD;
         } else if (this._taskInputs.ReportType === Constants.HTML) {
             type = ReportType.HTML;
+        } else if (this._taskInputs.ReportType === Constants.HTMLORIG) {
+            type = ReportType.HTMLORIG;
         } else {
             type = ReportType.ALL;
         }
@@ -86,8 +94,10 @@ export class Report {
             ext = Constants.XML;
         } else if (type === ReportType.MD) {
             ext = Constants.MARKDOWN;
+        } else if (type === ReportType.HTMLORIG) {
+            ext = Constants.HTMLORIG;
         } else if (type === ReportType.ALL) {
-            const allTypes = [ReportType.XML, ReportType.HTML, ReportType.MD];
+            const allTypes = [ReportType.XML, ReportType.HTML, ReportType.MD, ReportType.HTMLORIG];
             for (const t of allTypes) {
                 const reportok = await this.GenerateReportInternal(t);
                 if (reportok === false) {
