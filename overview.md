@@ -7,7 +7,14 @@ This project is a Azure DevOps task that allows users to integrate Owasp Zap sec
 Follow the instructions below to add and configure the Owasp Zap Scanner in your build/release pipeline.
 
 ## Prerequisites
-* You need to have OWASP Zed Attach Proxy installed (e.g., on onpremise or on a virtual machine) and exposed so it can be accessed over the internet. The following article Installing & Configuring Owasp Zap on an Azure Virtual Machine provides a detailed guide on how to do it.
+* If you want to scan a local server without internet access, you must have OWASP Zed Attach Proxy installed. For example, on a virtual machine or on a local installation that has access to the web application to be scanned.
+
+* If you want to scan an application that is exposed to the internet or has access to it through a virtual network accessed from Azure Pipelines, you can use the ZAP run option in Docker.
+
+* Both examples can be run with this extension: [Owasp Zap Start Stop](https://marketplace.visualstudio.com/items?itemName=solucionespsg.OwaspZapOnPremiseStartStop)
+
+* The following article explains how to configure OWASP Zap and provides a detailed guide on how to do it.
+
 * Obtain the API Key required to access the ZAP API by following the instructions on the Official Documentation.
 
 ### Add the Owasp Zap Scanner
@@ -99,11 +106,51 @@ This configuration section includes the parameters that need to be sent to perfo
 
 ## Additional
 
-On Windows servers you can complement the use of this extension with:
+To complement the use of this extension it is recommended to use:
 
 https://marketplace.visualstudio.com/items?itemName=solucionespsg.OwaspZapOnPremiseStartStop
 
-With this extension you will be able to remotely start a new Owazap session on a new port, scan the URL and then stop the started session.
+With the extension OwaspZapStartStop VSTS task start, stop, download template and transform test result on Windows Server OnPremise (selft hosted) and run in Docker on Linux (Agent pool Azure Pipelines).
+
+# Full example
+
+### Agent Job:
+![alt tag](https://raw.githubusercontent.com/pablosguajardo/templates/main/img/owaspStartStop/ss1.png)
+
+
+### Owasp Zap Start
+![alt tag](https://raw.githubusercontent.com/pablosguajardo/templates/main/img/owaspStartStop/ss2.png)
+
+If you want to run it OnPremise select: **"Onpremise/Virtual (Self-hosted Agent Specification Windows)"**
+
+If you want to run it on Azure Pipelines Hosted (linux option) select: **"Run in docker (Agent Specification Linux)"**
+
+
+### Owasp Zap Scan
+![alt tag](https://raw.githubusercontent.com/pablosguajardo/templates/main/img/owaspStartStop/ss3.png)
+
+"Owasp Zap Scan" can be downloaded from here: https://marketplace.visualstudio.com/items?itemName=solucionespsg.owasp-zap-scan-psg
+
+### Upload Report To Azure Devops Wiki
+![alt tag](https://raw.githubusercontent.com/pablosguajardo/templates/main/img/owaspStartStop/ss7.png)
+
+"Upload Report To Azure Devops Wiki" can be downloaded from here: https://marketplace.visualstudio.com/items?itemName=solucionespsg.UploadReportToAzureDevopsWiki
+
+### Owasp Zap Stop
+![alt tag](https://raw.githubusercontent.com/pablosguajardo/templates/main/img/owaspStartStop/ss4.png)
+
+
+### Publish Test Result Converted
+![alt tag](https://raw.githubusercontent.com/pablosguajardo/templates/main/img/owaspStartStop/ss5.png)
+
+Then there is this "Publish Test Result" this is from Microsoft: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/publish-test-results-v2
+
+### Example of variables
+![alt tag](https://raw.githubusercontent.com/pablosguajardo/templates/main/img/owaspStartStop/ss8.png)
+
+### After finishing the tasks we access the tests:
+![alt tag](https://raw.githubusercontent.com/pablosguajardo/templates/main/img/owaspStartStop/ss6.png)
+
 
 
 
