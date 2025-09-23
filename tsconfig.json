@@ -1,0 +1,5 @@
+{
+  "extends": "./BuildTask/tsconfig.json",
+  "compilerOptions": {},
+  "include": ["BuildTask/**/*.ts"]
+}
